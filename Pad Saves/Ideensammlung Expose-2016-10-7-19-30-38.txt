@@ -1,0 +1,12 @@
+- Fragestellung: Vergleich aktueller Kompressionsalgorithmen unter Betrachtung verschiedener Einsatzszenarien
+
+- Was ist geil an dem Thema:
+    - Wird in den meisten Protollen und Anwendungen verwendet -> Geschwindigkeit
+    - Wachsende Datenmenge -> Notwendigkeit der effizienten Speicherung
+
+- Gliederung/Zeitplan:
+    - Recherche aktueller Kompressionsalgorithmen
+    - Recherche der Einsatzszenarien und Ermittlung der relevanten Faktoren (schneller Lese-/Schreibzugriff, Hohe Kompressionsrate), Erarbeitung der Klassifizierungen (Lossy/Lossless)
+    - Geschwindigkeitstests unter den ermittelten Szenarien/Faktoren
+    - Falls nicht zu aufwendig: Genauere Betrachtung der Funktionsweise der TOP5 Algorithmen
+    - Fazit
