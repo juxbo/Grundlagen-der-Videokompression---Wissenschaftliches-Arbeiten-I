@@ -27,4 +27,4 @@ Ideen:
 * Einfache ToDo Liste: + Wenig verwaltungsaufwand, - Je nach Realisierung fallen nicht unbedingt Charts etc. dabei heraus
 	* Über einfache text-Dateien könnten wir das gut über git syncen. Gibt es da bereits schon Tools für?
 	* Ansonsten nutzen bereits existierende Programme gerne nur eine Datei zum speichern, was bei merge conflicts ziemlich nervig wird...
-* ProjectLibre: + Gant Diagramme, + Direkt lernen mit professioneller Software zu arbeiten, - Java, - Wie syncen?, - Overkill?
+* [ProjectLibre](http://www.projectlibre.org/product/projectlibre-open-source): + Gant Diagramme, + Direkt lernen mit professioneller Software zu arbeiten, - Java, - Wie syncen?, - Overkill?
