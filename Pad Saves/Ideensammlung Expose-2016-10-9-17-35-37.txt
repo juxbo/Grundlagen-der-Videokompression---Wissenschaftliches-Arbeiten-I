@@ -1,0 +1,23 @@
+# Ideen zum Expose
+
+- Worum geht es?
+	Fragestellung: Vergleich aktueller Kompressionsalgorithmen unter Betrachtung verschiedener Einsatzszenarien
+	Alternativ: Vergleich verschiedener/zweier Algorithmen für ein bestimmtes Szenario (vgl. Audioformate http://www-lti.informatik.rwth-aachen.de/lehre/Komprimierung/SS2012/ausarbeitungen/MP3-Ogg.pdf)
+    Vielleicht: zstd und LZO für Datenkompression bei Filesystemen
+    oder: Welcher Algorithmus ist der Beste, wenn ich einen Webserver betreiben möchte
+
+- Warum ist dieses Thema nützlich / spannend / notwendig:
+    - Wird in den meisten Protollen und Anwendungen verwendet -> Geschwindigkeit durch kleinere Datenmenge
+    - Wachsende Datenmenge -> Notwendigkeit der effizienten Speicherung
+
+- Überblick, erste Recherche-Ergebnisse:
+
+- Wie plane ich, das Thema umzusetzen? (Projektplan, Meilensteine):
+    - Recherche aktueller Kompressionsalgorithmen
+    - Recherche der Einsatzszenarien und Ermittlung der relevanten Faktoren (schneller Lese-/Schreibzugriff, hohe Kompressionsrate), Erarbeitung der Klassifizierungen (Lossy/Lossless)
+    - Erste Auswahl von Algorithmen
+    - Performancetests unter den ermittelten Szenarien/Faktoren
+    - Falls nicht zu aufwendig: Genauere Betrachtung der Funktionsweise und Gegenüberstellung der besten Algorithmen für verschiedene Einsatzszenarien
+    - Fazit
+
+- Welche Ergebnisse erwarte ich?
