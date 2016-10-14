@@ -1,0 +1,55 @@
+# Ideen zum Expose
+
+- Worum geht es?
+	Fragestellung: Vergleich aktueller Kompressionsalgorithmen unter Betrachtung verschiedener Einsatzszenarien
+	Alternativ: Vergleich verschiedener/zweier Algorithmen für ein bestimmtes Szenario (vgl. Audioformate http://www-lti.informatik.rwth-aachen.de/lehre/Komprimierung/SS2012/ausarbeitungen/MP3-Ogg.pdf)
+    Vielleicht: zstd und LZ4 für Datenkompression bei Filesystemen
+    oder: Welcher Algorithmus ist der Beste, wenn ich einen Webserver betreiben möchte
+    
+	Andere Alternativen:
+		* Videokompression: h.264 -> Technisches Review
+			+ Relativ tiefgreifende Beschäftigung mit dem aktuell wichtigsten Codec für Streaming, Blue-Ray etc.
+			- Vermutlich Mehraufwand beim Finden von 10 vershiedenen Quellen, da Orientierung an einem Paper wahrscheinlich
+			- Abschreibegefahr
+			- Schwer technische Betrachtung im Rahmen von 10 Seiten zu halten
+		* Vergleich: h.264 vs. h.265
+			+ Tiefe Beschäftigung (siehe oben)
+			+ Eigenanteil kommt automatisch mit hinein
+			+ Abschreibegefahr gering
+			+ Quellendiversität: mittelmäßig
+			- Noch schwerer technische Betrachtung im Rahmen von 10 Seiten zu halten
+		* Review: Entwicklung von Videokompressionsalgorithmen: von MPEG-2 zu h.265
+			+ Allgemeinere Beschäftigung mit den Kompressionsmethoden/Ansätzen
+			+ Eigenanteil kommt automatisch mit hinein
+			+ Abschreibegefahr gering
+			+ Quellendiversität: hoch
+			+ Im Vergleich zu der Beschränkung auf h.264/h.265 kein tiefer Einstieg notwendig/Wir können uns gut auf die wichtigsten Eigenschaften konzentrieren
+			- Vermutlich der höchste Research-Aufwand
+
+- Warum ist dieses Thema nützlich / spannend / notwendig:
+    - Streaming <- Korrelation von Ladezeit und Kundengewinnung
+    - Gute Qualität auf geringem Speicherplatz
+    - Spannend, da es von jeden fast täglich unbewusst benutzt wird
+    - Spannend, um zu erfahren wie Videoartefakte, die jeder kennt, entstehen
+    - immer weitereichendere Verbreitung von hochauflösenden Videokameras (in Form von Smartphones) mit begrenztem Speicherplatz
+    - ständige Weiterentwicklung von Videokameras und Displays (4k+), jedoch geringe Medien zum abspielen aufgrund von immensen Datenmengen
+    
+- Überblick, erste Recherche-Ergebnisse:
+
+- Wie plane ich, das Thema umzusetzen? (Projektplan, Meilensteine):
+   - Grundlagen
+     - Redundancyreduction
+     - Irrelevanzreduktion
+	     - psycho-visuelle Effekte
+	- Die Codecs (historisch geordnet?) (Von <https://encodingwissen.de/hintergrund/formatedschungel/video-audio/>)
+		- (MPEG-1 Video, VC-1, VP8, VP9) <- Nicht so bekannte, relevante, aber möglicherweise weniger komplexe, sodass Grundkonzepte besser erklärt werden können?
+		- MPEG-2 Video
+		- MPEG-4 Advanced Simple Profile
+		- MPEG-4 Advanced Video Coding (H.264)
+		- MPEG-H High Efficiency Video Coding (H.265)
+		
+    - Fazit
+
+- Welche Ergebnisse erwarte ich?
+	- Ich erwarte einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten
+	- Ich erwarte, dass die Datenmengen von Videos trotz steigender Qualität und Auflösung dank Kompression maximal im selben Maße wie die Kapazität und Geschwindigkeit von Speichermedien wächst <- Selber Tests durchführen?
