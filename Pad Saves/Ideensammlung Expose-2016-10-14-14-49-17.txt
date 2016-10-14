@@ -1,0 +1,43 @@
+# Ideen zum Expose
+
+- Worum geht es?
+	Fragestellung: Vergleich aktueller Kompressionsalgorithmen unter Betrachtung verschiedener Einsatzszenarien
+	Alternativ: Vergleich verschiedener/zweier Algorithmen für ein bestimmtes Szenario (vgl. Audioformate http://www-lti.informatik.rwth-aachen.de/lehre/Komprimierung/SS2012/ausarbeitungen/MP3-Ogg.pdf)
+    Vielleicht: zstd und LZ4 für Datenkompression bei Filesystemen
+    oder: Welcher Algorithmus ist der Beste, wenn ich einen Webserver betreiben möchte
+    
+	Andere Alternativen:
+		* Videokompression: h.264 -> Technisches Review
+			+ Relativ tiefgreifende Beschäftigung mit dem aktuell wichtigsten Codec für Streaming, Blue-Ray etc.
+			- Vermutlich Mehraufwand beim Finden von 10 vershiedenen Quellen, da Orientierung an einem Paper wahrscheinlich
+			- Abschreibegefahr
+			- Schwer technische Betrachtung im Rahmen von 10 Seiten zu halten
+		* Vergleich: h.264 vs. h.265
+			+ Tiefe Beschäftigung (siehe oben)
+			+ Eigenanteil kommt automatisch mit hinein
+			+ Abschreibegefahr gering
+			+ Quellendiversität: mittelmäßig
+			- Noch schwerer technische Betrachtung im Rahmen von 10 Seiten zu halten
+		* Review: Entwicklung von Videokompressionsalgorithmen: von MPEG-2 zu h.265
+			+ Allgemeinere Beschäftigung mit den Kompressionsmethoden/Ansätzen
+			+ Eigenanteil kommt automatisch mit hinein
+			+ Abschreibegefahr gering
+			+ Quellendiversität: hoch
+			+ Im Vergleich zu der Beschränkung auf h.264/h.265 kein tiefer Einstieg notwendig/Wir können uns gut auf die wichtigsten Eigenschaften konzentrieren
+			- Vermutlich der höchste Research-Aufwand
+
+- Warum ist dieses Thema nützlich / spannend / notwendig:
+    - Wird in den meisten Protollen und Anwendungen verwendet -> Geschwindigkeit durch kleinere Datenmenge
+    - Wachsende Datenmenge -> Notwendigkeit der effizienten Speicherung
+
+- Überblick, erste Recherche-Ergebnisse:
+
+- Wie plane ich, das Thema umzusetzen? (Projektplan, Meilensteine):
+    - Recherche aktueller Kompressionsalgorithmen
+    - Recherche der Einsatzszenarien und Ermittlung der relevanten Faktoren (schneller Lese-/Schreibzugriff, hohe Kompressionsrate), Erarbeitung der Klassifizierungen (Lossy/Lossless)
+    - Erste Auswahl von Algorithmen
+    - Performancetests unter den ermittelten Szenarien/Faktoren
+    - Falls nicht zu aufwendig: Genauere Betrachtung der Funktionsweise und Gegenüberstellung der besten Algorithmen für verschiedene Einsatzszenarien
+    - Fazit
+
+- Welche Ergebnisse erwarte ich?
