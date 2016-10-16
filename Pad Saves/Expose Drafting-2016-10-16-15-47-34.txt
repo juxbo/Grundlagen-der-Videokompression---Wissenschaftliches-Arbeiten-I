@@ -1,0 +1,43 @@
+- Worum geht's / Warum ist dieses Thema nützlich/spannend/notwendig
+		
+	- Streaming <- Korrelation von Ladezeit und Kundengewinnung
+	- Gute Qualität auf geringem Speicherplatz
+	- Spannend, da es von jedem fast täglich unbewusst benutzt wird
+	- Spannend, um zu erfahren wie Videoartefakte, die jeder kennt, entstehen
+	- immer weitereichendere Verbreitung von hochauflösenden Videokameras (in Form von Smartphones) mit begrenztem Speicherplatz
+	- ständige Weiterentwicklung von Videokameras und Displays (4k+), jedoch geringe Medien zum abspielen aufgrund von immensen Datenmengen
+	
+- Überblick, erste Recherche-Ergebnisse:
+
+- Wie plane ich, das Thema umzusetzen? (Projektplan, Meilensteine):
+    
+    - Vorgehen:
+        - Ausgehend vom ersten Video Coding Standard der ITU-T, dem h.261[1].
+        - Erarbeitung der Grundlagen von Videokompression
+        - Beschränkung auf die generellen Prinzipien
+        - Fokus auf die mathematischen Grundlagen (Sollen wir das so explizit hier rein schreiben?)
+        
+    -Struktur (http://keyj.emphy.de/files/projects/videocomp.pdf)
+		- Einführung und Überblick
+     - Irrelevanzreduktion (psycho-visuelle Effekte)
+			- Chroma Subsampling <- Passt irgendwie nicht ganz in die Reihenfolge von tiefere Beschäftigung hin zu "kurz vorgestellt"
+			- 8x8 DCT
+			- Quantisierung
+     - Redundancyreduction
+	     - Entropiecodierung
+			- Motion Compensation
+			- Inter-, Intraprediction
+		- Fazit
+		- Ausblick
+			
+		- Makroblöcke
+		- (I-,P-,B-) Frames
+		- DC-Prediction, Motion Vector Prediction (Gibt es einen unterschied zu Motion Compensation?)
+		- Postprocessing (Deblocking, Deringing)
+		
+- Welche Ergebnisse erwarte ich?
+
+	- Ich erwarte einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten
+	- Ich erwarte, dass die Datenmengen von Videos trotz steigender Qualität und Auflösung dank Kompression maximal im selben Maße wie die Kapazität und Geschwindigkeit von Speichermedien wächst <- Selber Tests durchführen?
+	
+	[1]: http://www.itu.int/rec/T-REC-H.261-198811-S/en
