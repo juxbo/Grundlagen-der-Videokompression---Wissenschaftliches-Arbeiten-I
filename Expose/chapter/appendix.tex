@@ -1,27 +1,48 @@
-Folgende Anhänger sind dem Exposè hinzufügen:
 \section{Gliederungsentwurf}
-\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
-\item Erstes Kapitel
-\begin{itemize}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
-\item a
-\item b
-\end{itemize}
-\item Zweites Kapitel
+
+\begin{enumerate}
+\setlength\itemsep{-1em} % set spacing between bullet points
+\item Einführung und Überblick
+\item Grundlagen
+\begin{enumerate}
+	\setlength\itemsep{-1em} % set spacing between bullet points
+	\item Irrelevanzreduktion
+	\begin{itemize}
+		\setlength\itemsep{-1em} % set spacing between bullet points
+		\item Chroma Subsampling
+		\item DCT
+		\item Quantisierung
+	\end{itemize}
+	\item Redundanzreduktion
+	\begin{itemize}
+		\setlength\itemsep{-1em} % set spacing between bullet points
+		\item Entropiecodierung
+		\item Inter-, Intraprediction
+		\item Motion Compensation
+	\end{itemize}
 \end{enumerate}
+\item Fazit
+\item Ausblick
+\end{enumerate}
+
 \section{Zeit- und Aufgabenplan}
-Detaillierte Planung der einzelnen Schritte, Aufgaben in Wochen.
 \begin{table}[!h]
 \begin{tabularx}{\textwidth}{ |c|X|c| }
   \hline
-  Woche & Aufgabe & Meilenstein  \\
+  \textbf{Woche} & \centering{\textbf{Aufgabe}} & \textbf{Meilenstein}  \\
   \hline 
-  1  & Stand der Forschung zusammenfassen&  \\ \hline
-  2  & Stand der Forschung zusammenfassen & Kapitel Stand der Forschung   \\
-  \hline
+  1   & Weitere Einarbeitung in das Thema Videokompression &  \\ \hline
+  2   & Einarbeitung in Irrelevanzreduktion & Liste zu behandelnder Irrelevanzreduktionsmethoden \\ \hline
+  3-4 & Zusammenfassung der zu behandelnden Irrelevanzreduktionsmethoden & Kapitel: Irrelevanzreduktion \\ \hline
+  5   & Einarbeitung in Redundanzreduktion & Liste zu behandelnder Redundanzreduktionmethoden \\ \hline
+  6   & Ausblick und Fazit erarbeiten & Kapitel: Ausblick und Fazit \\ \hline
+  7   & Den erarbeiteten Überblick zusammenfassen & Kapitel: Einleitung und Überblick   \\ \hline
+  8  & Korrektur lesen & Abschluss und Abgabe der Arbeit \\ \hline
 \end{tabularx}
 \end{table}
-\section{Vorläufiges Literaturverzeichnis}
-Überblick über bisher ermittelten Literaturquellen (Alphabetisch nach den Namen der Autoren sortiert)
-\nocite{*}
-\singlespacing % bibliography with single spacing 
-\bibliography{references}
+
+%\section{Vorläufiges Literaturverzeichnis}
+%Überblick über bisher ermittelten Literaturquellen (Alphabetisch nach den Namen der Autoren sortiert)
+%\nocite{*}
+%\singlespacing % bibliography with single spacing 
+%\bibliography{references}
