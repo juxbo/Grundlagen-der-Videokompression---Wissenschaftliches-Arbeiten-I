@@ -1,0 +1,80 @@
+- Worum geht's / Warum ist dieses Thema nützlich/spannend/notwendig
+
+	 - Erarbeitung der Grundlagen von Videokompression
+		
+	- Streaming <- Korrelation von Ladezeit und Kundengewinnung
+	- Gute Qualität auf geringem Speicherplatz
+	- Spannend, da es von jedem fast täglich unbewusst benutzt wird
+	- Spannend, um zu erfahren wie Videoartefakte, die jeder kennt, entstehen
+	- immer weitereichendere Verbreitung von hochauflösenden Videokameras (in Form von Smartphones) mit begrenztem Speicherplatz
+	- ständige Weiterentwicklung von Videokameras und Displays (4k+), jedoch geringe Medien zum abspielen aufgrund von immensen Datenmengen
+	
+- Überblick, erste Recherche-Ergebnisse:
+
+
+- Wie plane ich, das Thema umzusetzen? (Projektplan, Meilensteine):
+    
+    - Vorgehen:
+        - Ausgehend vom ersten Video Coding Standard der ITU-T, dem h.261 [1].
+        - Beschränkung auf die generellen Prinzipien
+        - Fokus auf die mathematischen Grundlagen (Sollen wir das so explizit hier rein schreiben?)
+        
+Als strukturgebende Grundlage für diese Arbeit könnte der erste praktisch relevante Video Coding Standard der ITU-T, der h.261 [1], dienen. Hier sind bereits die wichtigsten Methoden der Videokompression verwendet worden, wobei er zugleich keine komplexeren Modifikationen, wie seine Nachfolger, beinhaltet. Da eine vollständige Erarbeitung der technischen Umsetzungen aktueller Videocodecs im Rahmen dieser Semesterarbeit nicht möglich ist, werden wir uns auf die Herausarbeitung der generellen Prinzipien der visuellen Videokompression beschränken. Hierbei soll unser Fokus auf den mathematischen Grundlagen der Verfahren liegen, die wir gegebenenfalls mit Beispielcode veranschaulichen.
+
+    -Struktur (http://keyj.emphy.de/files/projects/videocomp.pdf)
+		- Einführung und Überblick
+     - Irrelevanzreduktion
+			- Chroma Subsampling <- Passt irgendwie nicht ganz in die Reihenfolge von tiefere Beschäftigung hin zu "kurz vorgestellt"
+			- 8x8 DCT
+			- Quantisierung
+     - Redundanzreduktion
+	     - Entropiecodierung
+			- Motion Compensation
+			- Inter-, Intraprediction
+		- Fazit
+		- Ausblick
+			
+	- Unsortierte Themen, die ggf. noch eingegliedert werden müssen:
+		- Makroblöcke
+		- (I-,P-,B-) Frames
+		- DC-Prediction, Motion Vector Prediction (Gibt es einen unterschied zu Motion Compensation?)
+		- Postprocessing (Deblocking, Deringing)
+		
+- Welche Ergebnisse erwarte ich?
+
+	- Ich erwarte einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten
+	- Ich erwarte, dass die Datenmengen von Videos trotz steigender Qualität und Auflösung dank Kompression maximal im selben Maße wie die Kapazität und Geschwindigkeit von Speichermedien wächst <- Selber Tests durchführen?
+	
+Wir erwarten mit dieser Arbeit einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten. Außerdem erhoffen wir uns durch das grundlegende Verständnis der Methoden Auffälligkeiten wie Bildartefakte oder stark variierende Dateigrößen von Videos gleicher Länge eigenständig erklären zu können.
+
+[1]: http://www.itu.int/rec/T-REC-H.261-198811-S/en
+[2]: http://www.cns.nyu.edu/~shapley/Publications/Shapley-Lennie1985.pdf
+
+Expose:
+
+Die ständige Weiterentwicklung von Videokameras und hochauflösenden Displays, sogar im Taschenformat mit wenig Speicherplatz, sowie die zunehmende Popularität von Streaming, fordert eine gute Kompression, um die sich langsam entwickelnden Internetleitungen nicht zu überfordern und den verbrauchten Speicherplatz möglichst gering zu halten. Videokompression wird heutzutage von fast jedem Menschen unbewusst benutzt und viele bekannte (nervige) Bildfehler bzw. Videoartefakte sind Resultat von (zu starker) Videokompression. Wieso solche Artefakte entstehen, werden wir in dieser Arbeit ebenfalls untersuchen. <- sollten wir das tatsächlich schon versprechen? Wird maximal eine Randnotiz werden, oder?
+
+Hier noch einmal ein Alternativvorschlag für die Einleitung. Beim bisherigen fehlte ein wenig der Weg hin zu der Frage, warum wir die Arbeit machen. Steckte nur implizit drin. Einfach ändern, löschen, hinzufügen oder ganz streichen was dir nicht gefällt:
+
+# Einleitung
+
+Videos sind seit der Entwicklung des Fernsehers zum Massenmedium kaum noch aus dem alltäglichen Leben wegzudenken. Seit dem Aufstieg des Internets als zentrales Kommunikationsmedium haben sich allerdings die Anforderungen an geeignete Speichertechniken von Videos drastisch verändert. Die heutigen Abspielgeräte haben noch immer begrenzten Speicherplatz und sind häufig nur mit schmalbandigen Internetanbindungen ausgestattet. Die Auflösung der Videos ist hingegen stark gestiegen. Um diese Ansprüche zu adressieren wurden Kompressionsalgorithmen entwickelt, die eine effiziente Speicherung speziell für bewegte Bilder ermöglichen. Die resultierenden Probleme aus dieser Art der Speicherung, wie Bildartefakte, sind heutigen Nutzern wohlbekannt. Die eigentliche Funktionsweise von Videokompression bleibt aber oft unbemerkt.
+
+Deshalb möchten wir in dieser wissenschaftlichen Arbeit eine Übersicht über die Grundlagen von Videokompressionsverfahren geben. Die Hauptverfahren mit denen wir uns im Detail beschäftigen werden, lassen sich in die Kategorien Irrelevanzreduktion und Redundanzreduktion unterteilen. Dahinter stehen interessante Verfahren der Informationstheorie und die Ausnutzung von psychovisuellen Effekten.
+
+# Vorgehen
+
+Als strukturgebende Grundlage für diese Arbeit könnte der erste praktisch relevante Video Coding Standard der ITU-T, der h.261, dienen. Hier sind bereits die wichtigsten Methoden der Videokompression verwendet worden, wobei er zugleich keine komplexeren Modifikationen, wie seine Nachfolger, beinhaltet. Da eine vollständige Erarbeitung der technischen Umsetzungen aktueller Videocodecs im Rahmen dieser Semesterarbeit nicht möglich ist, werden wir uns auf die Herausarbeitung der generellen Prinzipien der visuellen Videokompression, unter Anderem Irrelevanz- und Redundanzreduktion, beschränken. Hierbei wird unser Fokus auf den mathematischen Grundlagen der Verfahren liegen, die wir mit Beispielcode veranschaulichen werden.
+
+# Erwartungen
+
+Wir erwarten mit dieser Arbeit einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten. Außerdem erhoffen wir uns durch das grundlegende Verständnis der Methoden Auffälligkeiten wie Bildartefakte oder stark variierende Dateigrößen von Videos gleicher Länge eigenständig erklären zu können.
+
+# Zeitplan
+
+Habe ich nur als Latex-Tabelle. 
+
+-----------------------------------------CUT---------------------------------------------------------------------------------------
+In dieser wissenschaftlichen Arbeit möchten wir eine Übersicht über die Grundlagen von Videokompressionsverfahren geben.
+In dieser wissenschaftlichen Arbeit möchten wir eine Übersicht über die Entwicklung von Kompressionsverfahren digitaler Videosignale von 1995 bis heute geben und im Zuge dessen die Grundlagen von Videokompression verständlich machen.
+Die Hauptverfahren mit denen wir uns im Detail beschäftigen werden, lassen sich in die Kategorien Irrelevanzreduktion und Redundanzreduktion unterteilen. Dahinter stehen interessante mathematische Verfahren, die sich über die Jahre stark entwickelt haben um die steigenden Anforderungen an Kompression von Videos zu erfüllen(?). der Informationstheorie und die Ausnutzung von psychovisuellen Effekten [2].
