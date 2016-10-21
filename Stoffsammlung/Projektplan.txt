@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-21T11:36:21+02:00
+
+====== Projektplan ======
+Created Friday 21 October 2016
+
+[ ] Weitere Einarbeitung in das Thema Videokompression [d: 2016-10-29]
+[ ] Einarbeitung in Irrelevanzreduktion [d: 2016-11-05]
+[ ] Zusammenfassung der zu behandelnden Irrelevanzreduktionsmethoden [d: 2016-11-12]
+[ ] Einarbeitung in Redundanzreduktion [d: 2016-11-26]
+[ ] Ausblick und Fazit erarbeiten [d: 2016-12-03]
+[ ] Den erarbeiteten Überblick zusammenfassen [d: 2016-12-10]
+[ ] Korrektur lesen [d: 2016-12-17]
