@@ -14,7 +14,7 @@ Hier vielleicht einmal eine kleine Zusammenstellung von Tools die wir benutzen (
 ===== Ideensammlung =====
 
 * Einfache text-Dateien: Zum Ideen aufschreiben und kurz notieren reichen die vermutlich ganz gut aus. Schön daran ist, dass kein großes Tool gestartet werden muss, syncing mit git ist top. Wenn wir markdown benutzen ist auch Formatierung und strukturierung ohne großen Aufwand möglich. Dafür gibts bei github ja auch einen extra Editor.
-* [Zim](http://zim-wiki.org/): Simples aber mächtiges Desktop Wiki, welches außerdem einfache ToDo-Listen implementiert.
+* [Zim](http://zim-wiki.org/): Simples aber mächtiges Desktop Wiki, welches außerdem einfache ToDo-Listen implementiert. Syncbar über git.
 
 ===== Quellenverwaltung =====
 

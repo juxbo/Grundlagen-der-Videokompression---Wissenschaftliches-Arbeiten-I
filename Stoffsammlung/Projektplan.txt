@@ -5,10 +5,18 @@ Creation-Date: 2016-10-21T11:36:21+02:00
 ====== Projektplan ======
 Created Friday 21 October 2016
 
-[ ] Weitere Einarbeitung in das Thema Videokompression [d: 2016-10-29]
-[ ] Einarbeitung in Irrelevanzreduktion [d: 2016-11-05]
-[ ] Zusammenfassung der zu behandelnden Irrelevanzreduktionsmethoden [d: 2016-11-12]
-[ ] Einarbeitung in Redundanzreduktion [d: 2016-11-26]
-[ ] Ausblick und Fazit erarbeiten [d: 2016-12-03]
-[ ] Den erarbeiteten Überblick zusammenfassen [d: 2016-12-10]
-[ ] Korrektur lesen [d: 2016-12-17]
+[ ] Weitere Einarbeitung in das Thema Videokompression [d: 2016-10-29] @Phase1 
+	[ ] Buch Digital Video Compression lesen
+	[ ] Grobe Orientierung in der Decoder Chain finden
+[ ] Einarbeitung in Irrelevanzreduktion [d: 2016-11-05] @Phase2 
+	[ ] Liste mit Methoden der Irrelevanzreduktion erstellen !  
+[ ] Zusammenfassung der zu behandelnden Irrelevanzreduktionsmethoden [d: 2016-11-12] @Phase3 
+	[ ] Kapitel: Irrelevanzreduktion !
+[ ] Einarbeitung in Redundanzreduktion [d: 2016-11-26] @Phase4
+	[ ] Liste mit Methoden der Redundanzreduktion !
+[ ] Zusammenfassung der zu behandelnden Redundanzreduktionsmethoden [d: 2016-12-03] @Phase5 
+	[ ] Kapitel: Redundanzreduktion !
+[ ] Ausblick und Fazit erarbeiten [d: 2016-12-10] @Phase6 
+	[ ] Kapitel Ausblick und Fazit !
+[ ] Den erarbeiteten Überblick zusammenfassen [d: 2016-12-10] ! @Phase6 
+[ ] Korrektur lesen [d: 2016-12-17] ! @Phase7
