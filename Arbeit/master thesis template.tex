@@ -1,0 +1,50 @@
+% ******************************
+% *       Master Thesis        *
+% *         Template           *
+% *                            *
+% *        FH Darmstadt        *
+% *   Fachbereich Informatik   *
+% ******************************
+
+% scrbook (KOMA script) settings
+\documentclass[liststotoc,bibtotoc,a4paper,12pt,parskip,final]{scrbook}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=1cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} % keine bitmap fonts
+\usepackage{ae,aecompl} % truetype fonts
+\usepackage[ngerman]{babel}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace} 
+\hbadness = 10000 % -> disable ``underfull \hbox'' warnings
+\usepackage[pdftex,bookmarks=true]{hyperref} % -> automatische ``bookmarks''
+\parindent 0pt % keine einrückung nach absätzen
+
+% \usepackage{natbib}
+% \usepackage{bibtopic}
+
+\begin{document}
+% 	\evensidemargin % breite seitenrand
+% 	\oddsidemargin % breite seitenrand
+	\frontmatter % keine kapitelnummern, römische seitenzahlen
+	\include{titelblatt}
+	\onehalfspacing
+	\include{erklaerung}
+	\include{abstrakt}
+	\tableofcontents
+	\listoffigures
+	\mainmatter
+	\include{einleitung}
+	\include{grundlagen}
+	\include{konzept}
+	\include{realisierung}
+	\include{ausblick}
+	\include{zusammenfassung}
+	\frontmatter % keine kapitelnummern, römische seitenzahlen
+	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
+% 	\include{glossar}
+%	\include{anhang}
+	\include{literaturverzeichnis}
+%	\bibliography{bibtex}
+\end{document}

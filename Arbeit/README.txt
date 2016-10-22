@@ -1,0 +1,2 @@
+Dieses Template wurde von Bjoern Frömmer und Nils Röder erstellt. Es benötigt das "Koma-Script" (http://www.komascript.de).
+Das "Koma-Script" lässt sich z.B. über den MiKTEX Package Manager installieren.
