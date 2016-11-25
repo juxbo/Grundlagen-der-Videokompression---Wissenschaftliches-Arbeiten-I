@@ -9,7 +9,7 @@
 % scrbook (KOMA script) settings
 \documentclass[liststotoc,bibtotoc,a4paper,12pt,parskip,final]{scrbook}
 \usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=1cm]{geometry}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc} % keine bitmap fonts
 \usepackage{ae,aecompl} % truetype fonts
 \usepackage[ngerman]{babel}
@@ -19,7 +19,7 @@
 \usepackage{setspace} 
 \hbadness = 10000 % -> disable ``underfull \hbox'' warnings
 \usepackage[pdftex,bookmarks=true]{hyperref} % -> automatische ``bookmarks''
-\parindent 0pt % keine einrückung nach absätzen
+\parindent 0pt % keine einrï¿½ckung nach absï¿½tzen
 
 % \usepackage{natbib}
 % \usepackage{bibtopic}
@@ -27,7 +27,7 @@
 \begin{document}
 % 	\evensidemargin % breite seitenrand
 % 	\oddsidemargin % breite seitenrand
-	\frontmatter % keine kapitelnummern, römische seitenzahlen
+	\frontmatter % keine kapitelnummern, rï¿½mische seitenzahlen
 	\include{titelblatt}
 	\onehalfspacing
 	\include{erklaerung}
@@ -36,15 +36,19 @@
 	\listoffigures
 	\mainmatter
 	\include{einleitung}
-	\include{grundlagen}
-	\include{konzept}
-	\include{realisierung}
+	\include{irrelevanzredukton}
+	\include{redundanzreduktion}
 	\include{ausblick}
 	\include{zusammenfassung}
-	\frontmatter % keine kapitelnummern, römische seitenzahlen
+	\frontmatter % keine kapitelnummern, rï¿½mische seitenzahlen
 	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
 % 	\include{glossar}
 %	\include{anhang}
-	\include{literaturverzeichnis}
-%	\bibliography{bibtex}
+%	\include{literaturverzeichnis}
+	\bibliographystyle{alpha} % author and year
+%	\bibliographystyle{plain}
+
+	\nocite{*}
+	%singlespacing % bibliography with single spacing 
+	\bibliography{references}
 \end{document}
