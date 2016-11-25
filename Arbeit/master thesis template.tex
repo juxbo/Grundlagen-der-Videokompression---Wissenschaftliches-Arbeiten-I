@@ -28,27 +28,23 @@
 % 	\evensidemargin % breite seitenrand
 % 	\oddsidemargin % breite seitenrand
 	\frontmatter % keine kapitelnummern, r�mische seitenzahlen
-	\include{titelblatt}
+	\include{chapters/titelblatt}
 	\onehalfspacing
-	\include{erklaerung}
-	\include{abstrakt}
+	\include{chapters/erklaerung}
+	\include{chapters/abstrakt}
 	\tableofcontents
 	\listoffigures
 	\mainmatter
-	\include{einleitung}
-	\include{irrelevanzredukton}
-	\include{redundanzreduktion}
-	\include{ausblick}
-	\include{zusammenfassung}
+	\include{chapters/einleitung}
+	\include{chapters/irrelevanzredukton}
+	\include{chapters/redundanzreduktion}
+	\include{chapters/ausblick}
+	\include{chapters/zusammenfassung}
 	\frontmatter % keine kapitelnummern, r�mische seitenzahlen
 	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
 % 	\include{glossar}
 %	\include{anhang}
-%	\include{literaturverzeichnis}
-	\bibliographystyle{alpha} % author and year
-%	\bibliographystyle{plain}
-
-	\nocite{*}
-	%singlespacing % bibliography with single spacing 
+	% \include{literaturverzeichnis}
+	\bibliographystyle{alpha}
 	\bibliography{references}
 \end{document}
