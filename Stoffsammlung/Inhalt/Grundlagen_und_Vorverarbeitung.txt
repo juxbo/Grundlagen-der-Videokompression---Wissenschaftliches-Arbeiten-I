@@ -7,4 +7,4 @@ Created Sunday 27 November 2016
 
 * Sampling
 * Preprocessing: Reduktion von Rauschen, da Rauschen = maximale Entropie = nicht losless komprimierbar
-* Aliasing
+* Aliasing -> Wagon-Wheel Effect

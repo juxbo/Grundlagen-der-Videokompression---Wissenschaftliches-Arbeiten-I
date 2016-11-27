@@ -5,11 +5,35 @@ Creation-Date: 2016-11-27T13:43:34+01:00
 ====== Irrelevanzreduktion ======
 Created Sunday 27 November 2016
 
+===== Chroma Subsampling =====
+
+* Was?
+	* RGB Werte -> YUV, also Limuneszenz + color difference space (oder [[YCrCb]] ; ist das das selbe?)
+* Warum?
+	* Varianzen in der Luminiszenz stärker wahrnehmbar, als Varianzen im Farbton -> Luminiszenz sollte genauer gespeichert werden, als Farbwerte
+* Nice to Know
+	* Konvertierung nicht verlustfrei, da bei hohe Anzahl Nachkommastellen etwas abgeschnitten wird -> //Generally, we must work to a precision at least one decimal order greater than the accuracy we require (S.69)//
+		* Anders ausgedrückt -> Bei gegebenen RGB Wert wird unser YUV Wert im eine Dezimalstelle ungenauer
+
 ===== Discrete Cosine Transformation =====
 
+* Was?
+	* Fourier-Trasnformation: Jede endliche Funktion kann mit Kosinusfunktion aproximiert werden.
 * Wozu?
+	* Varianzen in niedrigen Frequenzen sind eher wahzunehmen, als bei hohen. Da nach der DCT die niedrigeren Ortsfrequenzen links oben, die höheren rechts unten stehen, können letztere "weggenullt" werden???? Richtig?
+	* //DCT is useful for compression only if we can discard a large number of coefficients and, in general, for blocks that obey the rules of continous tone images this is true. (S.88)//
 * Preface
+	* Pixel = kleinste Einheit eines Bild; hat eine räumliche ausdehnung
+	* Sample = 1-dimensional; Genau der Wert, den wir samplen. Also RGB oder YUV eines einigen Pixels. 
+			Während des Kompressionsprozesses wird allerdings nur eindimensional, also beispielsweise nur mit Y gerechnet
+	* Pixel != Sample, sondern ein Sample steht in Verbindung mit einem Pixel. Normalerweise wird das Sample im Mittelpunkt des Pixels verortet.
 * Wie? Grundlegend
+	* Es wird immer ein Makroblock von 8x8 Pixel untersucht.
+	* F(u,v) also eines Samples im Makroblock = //Formel (S.75)//
+		1. Koeffizienten jedes Pixels berechnen.
+		2. Axis rotation. //...we can take an 8x8 block if pixels, and represent them by a single point on a 64-dimensional plot. We can then rotate the axis frame in 64-D space (!) and obtain a new set of values that are much more efficient to code (S.86)//
+* Downsites: Vertical Aliasing ?? (S.88-89)
+	* Bei vertikalen Streifen wird nur die erste Reihe mit != 0 gefüllt. -> Später sind die 0en gut wegzuentropisieren
 * Wie? Advanced
 
 ===== Quantisation =====
