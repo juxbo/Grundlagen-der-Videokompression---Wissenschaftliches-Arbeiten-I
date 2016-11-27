@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-27T13:36:42+01:00
+
+====== Inhalt ======
+Created Sunday 27 November 2016
+
+* Einleitung
+* [[+Grundlagen und Vorverarbeitung|Grundlagen / Vorverarbeitung]]
+* [[+Redundanzreduktion|Redundanzreduktion]]
+* [[+Irrelevanzreduktion|Irrelevanzreduktion]]
+* [[+Fazit|Fazit]]
