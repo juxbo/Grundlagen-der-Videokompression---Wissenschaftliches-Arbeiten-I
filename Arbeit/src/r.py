@@ -34,7 +34,7 @@ bildInYUV = rgb_chroma(bild)
 luma = getY(bildInYUV)
 
 # do the dct on the Y only array
-dimg = dct(luma, False)
+dimg = dct(luma)
 
 # Here RLE and other fancy stuff might happen
 # ...
@@ -46,7 +46,6 @@ afterdct = dct_inverse(dimg)
 afterdct = setY(bildInYUV, afterdct)
 # convert to RGB again
 afterdct = chroma_rgb(afterdct)
-
 # create image
 afterdct = create_img(afterdct)
 # show image

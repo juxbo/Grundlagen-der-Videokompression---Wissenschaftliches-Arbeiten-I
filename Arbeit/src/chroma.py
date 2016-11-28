@@ -1,25 +1,25 @@
 from copy import copy, deepcopy
-
+from YUVBT601 import RGB2YUV, YUV2RGB
 def rgb_chroma(rgbArray):
     yuvArray = deepcopy(rgbArray)
     for x, line in enumerate(rgbArray):
         for y, rgb in enumerate(line):
-            r, g, b = rgb
-            Y =  0.299 * r + 0.587 * g + 0.114 * b
-            U = -0.299 * r - 0.587 * g + 0.886 * b
-            V =  0.701 * r - 0.587 * g - 0.144 * b
-            yuvArray[x][y] = (Y, U, V)
+            yuvArray[x][y] = RGB2YUV(rgb)
     return yuvArray
 
 def chroma_rgb(yuvArray):
     rgbArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
-            Y, U, V = yuv
-            r = Y + V
-            g = Y - 0.509 * V - 0.194 * U
-            b = Y + U
-            rgbArray[x][y] = (round(r), round(g), round(b))
+            R, G, B = YUV2RGB(yuv)
+            if R > 255:
+                R = 255
+            if G > 255:
+                G = 255
+            if B > 255:
+                B = 255
+            yuv = (round(R), round(G), round(B))
+            rgbArray[x][y] = yuv
     return rgbArray
 
 def getY(yuvArray):
