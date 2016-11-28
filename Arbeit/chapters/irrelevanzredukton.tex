@@ -1,7 +1,22 @@
 \chapter{Irrelevanzreduktion}
 \label{kap:Irrelevanzreduktion}
-<Text>
+
+* Wie in Einleitung geschieben: Irrelevanzreduktion basiert auf Psychovisuellen Effekten. Im wesentlichen wird ausgenutzt:
+	* Varianzen in der Helligkeit nimmt menschliches Auge besser wahr, als Varianzen im Farbton
+	* Niedrige Ortsfrequenzen nimmt menschliches Auge besser wahr als hohe (Was zu Hölle sind Ortsfrequenzen?)
+	* Quellen: Etwas Besseres als \cite{dankmeier_grundkurs_2006} S.358 \& S.359?
+* pv. Effekte kann man sich so zu nutze machen, dass wir relevantere Informationen genauer Speichern, als weniger relevante
+* Da Daten in RAW RGB im Normalfall vorliegen müssen wir die Daten erst vorbereiten, um sie dann nutzen zu können.
+	* Um an Helligkeit heran zu kommen -> RGB -> YUV (Oder YCrCb, wo ist der Unterschied?)
+		* Weiterverarbeitung via Subsampling
+	* Um an Ortsfrequenzen heran zu kommen -> DCT
+		* Weiterverarbeitung via Quantisierung
+		* Wobei allerdings nicht direkt weniger Speicherplatz verbraucht wird, sondern vielmehr die Daten besser komprimierbar für RLE gemacht werden, welches im nächsten Kapitel behandelt wird.
+
 \section{Chroma Subsampling}
+
+* RGB -> YUV
+* 4:2:0 -> 50\% Komprimierung!
 
 \section{Diskrete Kosinus Transformation}
 
