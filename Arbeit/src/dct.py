@@ -27,7 +27,7 @@ c = [[139,144,149,153,155,155,155,155],
      [162,162,161,163,162,157,157,157],
      [162,162,161,161,163,158,158,158]]
 
-def dct(f):
+def dct(f, toint=True):
     # initialize resulting DCT array
     F = [8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0]]
     # Go through f and calculate DC/AC for each value
@@ -47,14 +47,35 @@ def dct(f):
                 for y in range(0,8):
                     sum += f[x][y] * math.cos((((2 * x) + 1) * u * math.pi ) / 16) * math.cos((((2 * y) + 1) * v * math.pi) / 16)
             # save the AC/DC to the corresponding cell in output array
-            F[u][v] = (cu/2) * (cv/2) * sum
+            if toint:
+                F[u][v] = round((cu * cv * sum) / 4)
+            else:
+                F[u][v] = (cu * cv * sum) / 4
     return F
 
+def dct_inverse(F, toint=True):
+    # initialize resulting DCT array
+    f = [8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0]]
+    # Go through f and calculate DC/AC for each value
+    for x in range(0,8):
+        for y in range(0,8):
+            
+            sum = 0
+            for u in range(0,8):
+                for v in range(0,8):
+                    if u == 0:
+                        cu = 1/math.sqrt(2)
+                    else: # u > 0:
+                        cu = 1
+                    if v == 0:
+                        cv = 1/math.sqrt(2)
+                    else: # v > 0:
+                        cv = 1
 
-print("Ausgangsarray:")
-for i in a:
-    print(i)
-print("DCT:")
-d = dct(a)
-for i in d:
-    print(i)
+                    sum += (cu/2) * (cv/2) * F[u][v] * math.cos((((2 * x) + 1) * u * math.pi ) / 16) * math.cos((((2 * y) + 1) * v * math.pi) / 16)
+            # save the AC/DC to the corresponding cell in output array
+            if toint:
+                f[x][y] = round(sum)
+            else:
+                f[x][y] = sum
+    return f
