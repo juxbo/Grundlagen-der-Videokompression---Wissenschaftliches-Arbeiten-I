@@ -1,4 +1,10 @@
+"""
+    Konvertierung von RGB zu YUV und umgekehrt.
+    Implementiert nach https://www.fourcc.org/fccyvrgb.php
+"""
+
 import numpy as np
+
 
 def RGB2YUV(RGB):
     """ takes rgb value as tuple like (r, g, b)
