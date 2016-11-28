@@ -18,6 +18,12 @@ def chroma_rgb(yuvArray):
                 G = 255
             if B > 255:
                 B = 255
+            if R < 0:
+                R = 0
+            if G < 0:
+                G = 0
+            if B < 0:
+                B = 0
             yuv = (round(R), round(G), round(B))
             rgbArray[x][y] = yuv
     return rgbArray
