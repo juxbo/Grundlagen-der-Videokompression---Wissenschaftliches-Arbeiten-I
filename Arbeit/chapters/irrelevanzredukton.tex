@@ -4,7 +4,7 @@
 * Wie in Einleitung geschieben: Irrelevanzreduktion basiert auf Psychovisuellen Effekten. Im wesentlichen wird ausgenutzt:
 	* Varianzen in der Helligkeit nimmt menschliches Auge besser wahr, als Varianzen im Farbton
 	* Niedrige Ortsfrequenzen nimmt menschliches Auge besser wahr als hohe (Was zu Hölle sind Ortsfrequenzen?)
-	* Quellen: Etwas Besseres als \cite{dankmeier_grundkurs_2006} S.358 \& S.359?
+	* Quellen: Etwas Besseres als \cite{dankmeier_grundkurs_2006} S.358 \& S.359? -> Vllt \cite{akramullah_digital_2014} S.13
 * pv. Effekte kann man sich so zu nutze machen, dass wir relevantere Informationen genauer Speichern, als weniger relevante
 * Da Daten in RAW RGB im Normalfall vorliegen müssen wir die Daten erst vorbereiten, um sie dann nutzen zu können.
 	* Um an Helligkeit heran zu kommen -> RGB -> YUV (Oder YCrCb, wo ist der Unterschied?)
@@ -16,8 +16,28 @@
 \section{Chroma Subsampling}
 
 * RGB -> YUV
+* Formeln nach https://www.fourcc.org/fccyvrgb.php --> Gibt es vllt. eine bessere Quelle? Kann ich das nach CCIR 601 ableiten?
 * 4:2:0 -> 50\% Komprimierung!
 
 \section{Diskrete Kosinus Transformation}
+
+* DCT ist eine spezielle Form der Fourier-Transformation
+	* Fourier-Transformation aproximiert eine Funktion mittels Sinus-Funktionen
+	* 4 Probleme \cite{symes_peter_digital_2004} S.71:
+		* *It assumes that the time domain signal is infinite in extent*
+		* *It assumes continous funtions in time*
+		* Nicht ohne weiteres auf 2D anwendbar
+		* Generierte Koeffitienten sind 2D (Amplitude + Phase bzw. sinus + cosine)
+	* DCT funktioniert, solange nach dem Nyquist Theorem gesampled wurde (warum?)
+	* Nutzt außerdem noch einen Effekt aus, an den ich mich gerade nicht mehr erinnere ->bandwidth-limited data
+* DCT erlaubt uns Ortsfrequenzen zu extrahieren (warum? wodurch?)
+
+* Formel: \[F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
+	* Quelle \cite{symes_peter_digital_2004} S.75
+* Implementierung: Siehe src/dct.py
+
+* Es wird eine zweidimensionale DCT verwendet.
+
+* Wann funktioniert sie nicht so gut?
 
 \section{Quantisierung}
