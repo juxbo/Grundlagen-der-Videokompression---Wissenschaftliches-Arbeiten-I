@@ -1,14 +1,16 @@
 from copy import copy, deepcopy
 from YUVBT601 import RGB2YUV, YUV2RGB
+import numpy as np
+
 def rgb_chroma(rgbArray):
-    yuvArray = deepcopy(rgbArray)
+    yuvArray = np.empty_like(rgbArray, np.float64)
     for x, line in enumerate(rgbArray):
         for y, rgb in enumerate(line):
             yuvArray[x][y] = RGB2YUV(rgb)
     return yuvArray
 
 def chroma_rgb(yuvArray):
-    rgbArray = deepcopy(yuvArray)
+    rgbArray = np.empty_like(yuvArray, np.uint8)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
             R, G, B = YUV2RGB(yuv)

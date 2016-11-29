@@ -13,7 +13,7 @@ class Macroblock:
         self.compressedV = [[[],[]],[[],[]]]
         # initialize uncompressed, better might be just the generation
         # of the structure
-        self.uncompressed = np.empty([2,2,8,8,3]) #deepcopy(self.blocks)
+        self.uncompressed = np.empty([2,2,8,8,3], np.float64) #deepcopy(self.blocks)
 
     def extract_blocks(self, macro):
         for a in range(0,2):

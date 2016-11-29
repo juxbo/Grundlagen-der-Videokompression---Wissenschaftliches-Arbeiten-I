@@ -21,6 +21,8 @@ def create_img(image):
             img[y][x][0] = r
             img[y][x][1] = g
             img[y][x][2] = b
+    # don't know why but now we need to correct wrong array
+    img = np.rot90(np.fliplr(img))
     return img
 
 def encode(bild):
@@ -81,12 +83,11 @@ def decode(compressedMacroblocks):
 
 if __name__ == "__main__":
     # show original image
-    bild = scipy.misc.imread('./lena_square.jpg')
+    bild = scipy.misc.imread('./lena.jpg')
     img = create_img(bild)
     scipy.misc.imshow(img)
     # do compression and decompression
     compressed = encode(bild)
     uncompressed = decode(compressed)
-    print(uncompressed)
     # show uncompressed image
     scipy.misc.imshow(create_img(uncompressed))

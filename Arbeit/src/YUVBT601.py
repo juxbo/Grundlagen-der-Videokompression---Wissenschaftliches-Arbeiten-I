@@ -13,9 +13,9 @@ def YUV2RGB(YUV):
     """ takes yuv value as a tuple like (y, u, v)
     returns tuple of (r, g, b) """
     Y, U, V = YUV
-    r = Y + U/0.493
-    b = Y + V/0.877
-    g = (1/0.587) * Y - (0.299/0.587) * r - (0.144/0.587) * b
+    b = Y + (U/0.493)
+    r = Y + (V/0.877)
+    g = 1.704 * Y - 0.509 * r - 0.194 * b
     return (r, g, b)
 
     
