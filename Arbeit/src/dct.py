@@ -58,7 +58,7 @@ def dct(f, toint=True):
                 F[u][v] = (cu * cv * sum) / 4
     return F
 
-def dct_inverse(F, toint=True):
+def idct(F, toint=True):
     # initialize resulting DCT array
     f = [8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0], 8*[0]]
     # Go through f and calculate DC/AC for each value
