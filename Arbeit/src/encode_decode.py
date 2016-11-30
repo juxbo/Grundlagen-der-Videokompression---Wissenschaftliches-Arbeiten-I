@@ -1,4 +1,4 @@
-from picbb import bild
+from picb import bild
 from chroma import rgb_chroma, getY, chroma_rgb, setY
 from macroblock import Macroblock
 import scipy.misc
@@ -83,7 +83,7 @@ def decode(compressedMacroblocks):
 
 if __name__ == "__main__":
     # show original image
-    bild = scipy.misc.imread('./lena.jpg')
+    #bild = scipy.misc.imread('./test_img/lena_square.jpg')
     img = create_img(bild)
     scipy.misc.imshow(img)
     # do compression and decompression
