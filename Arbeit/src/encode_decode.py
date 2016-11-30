@@ -1,5 +1,5 @@
 from picb import bild
-from chroma import rgb_chroma, getY, chroma_rgb, setY
+from chroma import rgb_chroma, chroma_rgb
 from macroblock import Macroblock
 import scipy.misc
 import numpy as np
@@ -25,6 +25,7 @@ def create_img(image):
     img = np.rot90(np.fliplr(img))
     return img
 
+
 def encode(bild, subsample=True):
     # Variable that holds the compressed size at the end
     compressedSize = 0
@@ -39,13 +40,13 @@ def encode(bild, subsample=True):
     width = len(bild[0])
     compressedMacroblocks = np.empty([int(height/16), int(width/16)]).tolist()
 
-    for x in range(0,int(height/16)):
-        for y in range(0,int(width/16)):
+    for x in range(0, int(height/16)):
+        for y in range(0, int(width/16)):
             # Extract each Macroblock
             # A macroblock consists of 4 * 8x8 blocks
             xmul = x*16
             ymul = y*16
-            thisMacroblock = bildInYUV[xmul:xmul+16,ymul:ymul+16]
+            thisMacroblock = bildInYUV[xmul:xmul+16, ymul:ymul+16]
             macroblock = Macroblock(thisMacroblock)
             macroblock.compress(subsample)
             compressedSize += macroblock.size()
@@ -54,6 +55,7 @@ def encode(bild, subsample=True):
     print("Original Size: ", bildInYUV.size)
     print("Compressed Size: ", compressedSize)
     return compressedMacroblocks
+
 
 def decode(compressedMacroblocks, subsample=True):
     height = len(compressedMacroblocks) * 16
@@ -64,23 +66,11 @@ def decode(compressedMacroblocks, subsample=True):
             macroblock.uncompress(subsample)
             xmul = x*16
             ymul = y*16
-            uncompressedImage[xmul:xmul+16,ymul:ymul+16] = macroblock.getUncompressed()
-   
+            uncompressedImage[xmul:xmul+16, ymul:ymul+16] = macroblock.getUncompressed()
+
     uncompressedImage = chroma_rgb(uncompressedImage)
     return uncompressedImage
 
-    
-    # # Inverse dct to get old Y value back
-    # afterdct = dct_inverse(dimg)
-
-    # # set Y in original YUV array again
-    # afterdct = setY(bildInYUV, afterdct)
-    # # convert to RGB again
-    # afterdct = chroma_rgb(afterdct)
-    # # create image
-    # afterdct = create_img(afterdct)
-    # # show image
-    # scipy.misc.imshow(afterdct)
 
 if __name__ == "__main__":
     # show original image
