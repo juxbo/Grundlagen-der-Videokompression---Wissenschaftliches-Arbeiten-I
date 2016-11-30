@@ -77,7 +77,7 @@ class Macroblock:
                 # ...
                 self.compressedY[x][y] = yDCT
 
-    def compressU(self):
+    def compressSU(self):
         # subsample blocks to one 8x8 block
         subsampledBlock = np.empty( [8, 8], np.float64)
         for x, vblocks in enumerate(self.blocks):
@@ -92,7 +92,29 @@ class Macroblock:
         # ...
         self.compressedU = uDCT
 
+    def compressU(self):
+        for x, vblocks in enumerate(self.blocks):
+            for y, block in enumerate(vblocks):
+                uBlock = getU(block.tolist())
+                uDCT = dct(uBlock, False)
+                # Quantisierung
+                # ...
+                # RLE
+                # ...
+                self.compressedU[x][y] = uDCT
+
     def compressV(self):
+        for x, vblocks in enumerate(self.blocks):
+            for y, block in enumerate(vblocks):
+                vBlock = getV(block.tolist())
+                vDCT = dct(vBlock, False)
+                # Quantisierung
+                # ...
+                # RLE
+                # ...
+                self.compressedV[x][y] = vDCT
+
+    def compressSV(self):
         # subsample blocks to one 8x8 block
         subsampledBlock = np.empty( [8, 8], np.float64)
         for x, vblocks in enumerate(self.blocks):
@@ -119,6 +141,28 @@ class Macroblock:
             raise Exception("No compressed data there")
 
     def uncompressU(self):
+        if self.compressedU[0][0]:
+            for x, vblocks in enumerate(self.compressedU):
+                for y, block in enumerate(vblocks):
+                    # DeRLE
+                    # DeQuantisierung
+                    uBlock = idct(block, False)
+                    self.uncompressed[x][y] = setU(self.uncompressed[x][y], uBlock)
+        else:
+            raise Exception("No compressed data there")
+
+    def uncompressV(self):
+        if self.compressedV[0][0]:
+            for x, vblocks in enumerate(self.compressedV):
+                for y, block in enumerate(vblocks):
+                    # DeRLE
+                    # DeQuantisierung
+                    vBlock = idct(block, False)
+                    self.uncompressed[x][y] = setV(self.uncompressed[x][y], vBlock)
+        else:
+            raise Exception("No compressed data there")
+
+    def uncompressSU(self):
         if self.compressedU[0]:
             subsampledBlock = self.compressedU
             # DeRLE
@@ -134,7 +178,7 @@ class Macroblock:
         else:
             raise Exception("No compressed data there")
 
-    def uncompressV(self):
+    def uncompressSV(self):
         if self.compressedU[0]:
             subsampledBlock = self.compressedV
             # DeRLE
