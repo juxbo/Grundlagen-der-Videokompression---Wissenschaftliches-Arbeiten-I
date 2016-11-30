@@ -1,23 +1,30 @@
 \chapter{Irrelevanzreduktion}
 \label{kap:Irrelevanzreduktion}
 
-* Wie in Einleitung geschieben: Irrelevanzreduktion basiert auf Psychovisuellen Effekten. Im wesentlichen wird ausgenutzt:
-	* Varianzen in der Helligkeit nimmt menschliches Auge besser wahr, als Varianzen im Farbton
-	* Niedrige Ortsfrequenzen nimmt menschliches Auge besser wahr als hohe (Was zu Hölle sind Ortsfrequenzen?)
-	* Quellen: Etwas Besseres als \cite{dankmeier_grundkurs_2006} S.358 \& S.359? -> Vllt \cite{akramullah_digital_2014} S.13
-* pv. Effekte kann man sich so zu nutze machen, dass wir relevantere Informationen genauer Speichern, als weniger relevante
-* Da Daten in RAW RGB im Normalfall vorliegen müssen wir die Daten erst vorbereiten, um sie dann nutzen zu können.
-	* Um an Helligkeit heran zu kommen -> RGB -> YUV (Oder YCrCb, wo ist der Unterschied?)
-		* Weiterverarbeitung via Subsampling
-	* Um an Ortsfrequenzen heran zu kommen -> DCT
-		* Weiterverarbeitung via Quantisierung
-		* Wobei allerdings nicht direkt weniger Speicherplatz verbraucht wird, sondern vielmehr die Daten besser komprimierbar für RLE gemacht werden, welches im nächsten Kapitel behandelt wird.
+% * Wie in Einleitung geschieben: Irrelevanzreduktion basiert auf Psychovisuellen Effekten. Im wesentlichen wird ausgenutzt:
+% 	* Varianzen in der Helligkeit nimmt menschliches Auge besser wahr, als Varianzen im Farbton
+% 	* Niedrige Ortsfrequenzen nimmt menschliches Auge besser wahr als hohe (Was zu Hölle sind Ortsfrequenzen? -> http://www.otterstedt.de/wiki/index.php/Ortsfrequenz)
+% 	* Quellen: Etwas Besseres als \cite{dankmeier_grundkurs_2006} S.358 \& S.359? -> Vllt \cite{akramullah_digital_2014} S.13
+% * pv. Effekte kann man sich so zu nutze machen, dass wir relevantere Informationen genauer Speichern, als weniger relevante
+% * Da Daten in RAW RGB im Normalfall vorliegen müssen wir die Daten erst vorbereiten, um sie dann nutzen zu können.
+% 	* Um an Helligkeit heran zu kommen -> RGB -> YUV (Oder YCrCb, wo ist der Unterschied?)
+% 		* Weiterverarbeitung via Subsampling
+% 	* Um an Ortsfrequenzen heran zu kommen -> DCT
+% 		* Weiterverarbeitung via Quantisierung
+% 		* Wobei allerdings nicht direkt weniger Speicherplatz verbraucht wird, sondern vielmehr die Daten besser komprimierbar für RLE gemacht werden, welches im nächsten Kapitel behandelt wird.
+
+Die rohe Aufnahme eines Bildes bietet eine Fülle an Informationen. Mit Blick auf die Eigenschaften des menschlichen Sehsinns lässt sich hierbei allerdings feststellen, dass einige Informationen relevanter für das Erkennen eines Bildes sind, als andere. Die Irrelevanzreduktion beschäftigt sich mit der Trennung und Reduzierung von weniger wichtigen Informationen und bietet damit Methoden zur verlustbehafteten Datenkompression an.
+
+Bei der Videokompression werden im wesentlichen zwei Eigenschaften zur Reduktion von Daten ausgenutzt. Zum einen nimmt das Auge Varianzen in der Helligkeit stärker wahr, als Änderungen im Farbton. Zum Anderen ist das Auge besser in der Lage niedrige Ortsfrequenzen zu erkennen, als hohe - erkennt also grobe Strukturen eher als feinere. Diese Eigenschaften können nun ausgenutzt werden, um einen guten Kompromiss aus akzeptabler Bildqualität und guter Datenreduktion zu finden.
+%Dies liegt vor allem an der ungleichen Verteilung von Stäben und Zapfen in der Netzhaut des menschlichen Auges.
+ 
 
 \section{Chroma Subsampling}
 
 * RGB -> YUV
 * Formeln nach https://www.fourcc.org/fccyvrgb.php --> Gibt es vllt. eine bessere Quelle? Kann ich das nach CCIR 601 ableiten?
 * 4:2:0 -> 50\% Komprimierung!
+* Artefakte: * Blurring, etc nach \cite{akramullah_digital_2014}
 
 \section{Diskrete Kosinus Transformation}
 
