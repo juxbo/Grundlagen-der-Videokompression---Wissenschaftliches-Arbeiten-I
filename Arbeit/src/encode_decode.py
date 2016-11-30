@@ -26,6 +26,8 @@ def create_img(image):
     return img
 
 def encode(bild, subsample=True):
+    # Variable that holds the compressed size at the end
+    compressedSize = 0
     # chroma conversion
     bildInYUV = rgb_chroma(bild)
 
@@ -46,8 +48,11 @@ def encode(bild, subsample=True):
             thisMacroblock = bildInYUV[xmul:xmul+16,ymul:ymul+16]
             macroblock = Macroblock(thisMacroblock)
             macroblock.compress(subsample)
+            compressedSize += macroblock.size()
             compressedMacroblocks[x][y] = macroblock
 
+    print("Original Size: ", bildInYUV.size)
+    print("Compressed Size: ", compressedSize)
     return compressedMacroblocks
 
 def decode(compressedMacroblocks, subsample=True):

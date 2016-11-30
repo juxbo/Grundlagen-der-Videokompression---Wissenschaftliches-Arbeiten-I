@@ -38,6 +38,14 @@ class Macroblock:
                 result[x][y] = np.average(block[xmul:xmul+2,ymul:ymul+2])
         return result
 
+    def size(self):
+        """ returns a count of containing
+        elements in compressed form """
+        size = np.array(self.compressedY).size
+        size += np.array(self.compressedU).size
+        size += np.array(self.compressedV).size
+        return size
+
     def upsample(self, block):
         result = np.empty([16,16], np.float64)
         for x in range(0,8):
