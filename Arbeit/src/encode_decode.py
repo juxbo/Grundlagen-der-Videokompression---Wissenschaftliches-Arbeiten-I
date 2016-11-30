@@ -25,7 +25,7 @@ def create_img(image):
     img = np.rot90(np.fliplr(img))
     return img
 
-def encode(bild):
+def encode(bild, subsample=True):
     # chroma conversion
     bildInYUV = rgb_chroma(bild)
 
@@ -45,22 +45,18 @@ def encode(bild):
             ymul = y*16
             thisMacroblock = bildInYUV[xmul:xmul+16,ymul:ymul+16]
             macroblock = Macroblock(thisMacroblock)
-            macroblock.compressY()
-            macroblock.compressU()
-            macroblock.compressV()
+            macroblock.compress(subsample)
             compressedMacroblocks[x][y] = macroblock
 
     return compressedMacroblocks
 
-def decode(compressedMacroblocks):
+def decode(compressedMacroblocks, subsample=True):
     height = len(compressedMacroblocks) * 16
     width = len(compressedMacroblocks[0]) * 16
     uncompressedImage = np.empty([height, width, 3])
     for x, row in enumerate(compressedMacroblocks):
         for y, macroblock in enumerate(row):
-            macroblock.uncompressY()
-            macroblock.uncompressU()
-            macroblock.uncompressV()
+            macroblock.uncompress(subsample)
             xmul = x*16
             ymul = y*16
             uncompressedImage[xmul:xmul+16,ymul:ymul+16] = macroblock.getUncompressed()
@@ -83,7 +79,7 @@ def decode(compressedMacroblocks):
 
 if __name__ == "__main__":
     # show original image
-    #bild = scipy.misc.imread('./test_img/lena_square.jpg')
+    bild = scipy.misc.imread('./test_img/lena_square.jpg')
     img = create_img(bild)
     scipy.misc.imshow(img)
     # do compression and decompression

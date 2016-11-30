@@ -56,15 +56,25 @@ class Macroblock:
         
         return macroblock
 
-    def compress(self):
-        self.compressY()
-        self.compressU()
-        self.compressV()
+    def compress(self, do_subsample=True):
+        if do_subsample:
+            self.compressY()
+            self.compressSU()
+            self.compressSV()
+        else:
+            self.compressY()
+            self.compressU()
+            self.compressV()
 
-    def uncompress(self):
-        self.uncompressY()
-        self.uncompressU()
-        self.uncompressV()
+    def uncompress(self, was_subsampled=True):
+        if was_subsampled:
+            self.uncompressY()
+            self.uncompressSU()
+            self.uncompressSV()
+        else:
+            self.uncompressY()
+            self.uncompressU()
+            self.uncompressV()
 
     def compressY(self):
         for x, vblocks in enumerate(self.blocks):
