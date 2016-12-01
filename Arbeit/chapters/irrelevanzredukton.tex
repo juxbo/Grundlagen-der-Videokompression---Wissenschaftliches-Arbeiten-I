@@ -18,13 +18,22 @@ Die rohe Aufnahme eines Bildes bietet eine Fülle an Informationen. Mit Blick au
 Bei der Videokompression werden im wesentlichen zwei Eigenschaften zur Reduktion von Daten ausgenutzt. Zum einen nimmt das Auge Varianzen in der Helligkeit stärker wahr, als Änderungen im Farbton. Zum Anderen ist das Auge besser in der Lage niedrige Ortsfrequenzen zu erkennen, als hohe - erkennt also grobe Strukturen eher als feinere. Diese Eigenschaften können nun ausgenutzt werden, um einen guten Kompromiss aus akzeptabler Bildqualität und guter Datenreduktion zu finden \cite{akramullah_digital_2014}.
 %Dies liegt vor allem an der ungleichen Verteilung von Stäben und Zapfen in der Netzhaut des menschlichen Auges.
  
+% s/Helligkeit/Luminiszenz/g
 
 \section{Chroma Subsampling}
 
-* RGB -> YUV
+Das Chroma Subsampling nutzt den Umstand aus, dass Helligkeitsvarianzen besser wahrgenommen werden, als Farbvarianzen. Zumeist liegen die Bildinformationen im Ausgangsformat jedoch im RGB Farbmodell vor, wobei hier die Helligkeits- und Farbwerte gemischt in allen drei Elementen des Tupels codiert sind. Um nun aber die Chrominanz bei gleichbleibender Auflösung der Luminanz zu reduzieren benötigen wir eine getrennte Darstellung dieser Informationen. Hierfür wird im MPEG-1 Standard die YC$_r$C$_b$ Darstellung verwendet, wobei das Y für die Luminanz steht und in C$_r$ und C$_b$ die Farbwerte codiert werden. Die Umrechnung lässt sich mittels folgender Formeln bewerkstelligen:
+
+*ISO NORM Formeln hier einfügen*
+
+
+
+* RGB -> YCbCr
 * Formeln nach https://www.fourcc.org/fccyvrgb.php --> Gibt es vllt. eine bessere Quelle? Kann ich das nach CCIR 601 ableiten?
 * 4:2:0 -> 50\% Komprimierung!
 * Artefakte: * Blurring, etc nach \cite{akramullah_digital_2014}
+
+
 
 \section{Diskrete Kosinus Transformation}
 
