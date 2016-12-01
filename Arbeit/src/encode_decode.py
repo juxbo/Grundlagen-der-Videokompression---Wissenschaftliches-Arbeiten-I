@@ -3,7 +3,7 @@ from chroma import rgb_chroma, chroma_rgb
 from macroblock import Macroblock
 import scipy.misc
 import numpy as np
-
+from examples import example1
 
 def create_img(image):
     # declare picture size with RGB color
@@ -74,7 +74,8 @@ def decode(compressedMacroblocks, subsample=True):
 
 if __name__ == "__main__":
     # show original image
-    bild = scipy.misc.imread('./test_img/lena_square.jpg')
+    # bild = scipy.misc.imread('./test_img/lena_square.jpg')
+    bild = example1()
     img = create_img(bild)
     scipy.misc.imshow(img)
     # do compression and decompression
