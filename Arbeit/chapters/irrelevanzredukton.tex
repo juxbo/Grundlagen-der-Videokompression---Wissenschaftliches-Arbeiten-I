@@ -44,8 +44,11 @@ Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, di
     \label{fig:chroma_artefacts}
 \end{figure}
 
+% TODO:
 % Referenz auf Implementierung in den Anhang?
-% Beispielbild einbinden?
+% Beispielbild einbinden? check
+% Einheitliche benamselung von Helligkeit/Farbwert
+% Ansprache mit "wir" vermeiden
 
 % Problematisch an scharfen farbigen Kanten
 % * RGB -> YCbCr
@@ -56,23 +59,39 @@ Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, di
 
 \section{Diskrete Kosinus Transformation}
 
-* DCT ist eine spezielle Form der Fourier-Transformation
-	* Fourier-Transformation aproximiert eine Funktion mittels Sinus-Funktionen
-	* 4 Probleme \cite{symes_peter_digital_2004} S.71:
-		* *It assumes that the time domain signal is infinite in extent*
-		* *It assumes continous funtions in time*
-		* Nicht ohne weiteres auf 2D anwendbar
-		* Generierte Koeffitienten sind 2D (Amplitude + Phase bzw. sinus + cosine)
-	* DCT funktioniert, solange nach dem Nyquist Theorem gesampled wurde (warum?)
-	* Nutzt außerdem noch einen Effekt aus, an den ich mich gerade nicht mehr erinnere ->bandwidth-limited data
-* DCT erlaubt uns Ortsfrequenzen zu extrahieren (warum? wodurch?)
+% * DCT ist eine spezielle Form der Fourier-Transformation
+% 	* Fourier-Transformation aproximiert eine Funktion mittels Sinus-Funktionen
+% 	* 4 Probleme \cite{symes_peter_digital_2004} S.71:
+% 		* *It assumes that the time domain signal is infinite in extent*
+% 		* *It assumes continous funtions in time*
+% 		* Nicht ohne weiteres auf 2D anwendbar
+% 		* Generierte Koeffitienten sind 2D (Amplitude + Phase bzw. sinus + cosine)
+% 	* DCT funktioniert, solange nach dem Nyquist Theorem gesampled wurde (warum?)
+% 	* Nutzt außerdem noch einen Effekt aus, an den ich mich gerade nicht mehr erinnere ->bandwidth-limited data
+% * DCT erlaubt uns Ortsfrequenzen zu extrahieren (warum? wodurch?)
 
-* Formel: \[F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
-	* Quelle \cite{symes_peter_digital_2004} S.75
-* Implementierung: Siehe src/dct.py
+% * Formel: \[F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
+% 	* Quelle \cite{symes_peter_digital_2004} S.75
+% * Implementierung: Siehe src/dct.py
 
-* Es wird eine zweidimensionale DCT verwendet.
+% * Es wird eine zweidimensionale DCT verwendet.
 
-* Wann funktioniert sie nicht so gut?
+% * Wann funktioniert sie nicht so gut?
+
+Wie bereits oben beschrieben neigt der menschliche Sehsinn dazu niedrige Ortsfrequenzen eher zu erkennen, als höhere. Eine Ortsfrequenz ist definiert als 'Anzahl bestimmter periodischer Erscheinungen bezogen auf einen räumlichen Abstand' (http://www.otterstedt.de/wiki/index.php/Ortsfrequenz). Wir erkennen also gröbere Strukturen mit einer niedrigen Ortsfrequenz eher als feinere Strukturen mit einer höheren.
+% Bessere Quelle finden!
+Um diesen Umstand nun auszunutzen muss das Ausgangsbild von der räumlichen Ebene auf eine Frequenzebene transformiert werden, damit anschießend die höheren Frequenzen reduziert werden können. Diese Transformation lässt sich mittels einer zweidimensionalen Diskreten Kosinus Transformation (DCT) bewerkstelligen.
+
+Die DCT ist eine Sonderform der Foriertransformation, bei der eine Funktion mittels Sinusschwingungen aproximiert wird. Dieser Sonderfall nutzt hierbei den Umstand aus, dass das betrachtete Intervall begrenzt ist. Durch eine vertikale Spiegelung dieses Intervalls lassen sich die Sinus Anteile herauskürzen, wobei am Ende lediglich Kosinus Anteile übrig bleiben. % Ähhhhh, noch einmal nachlesen...
+Verarbeitet werden mit der DCT immer 8x8 Blöcke eines jeden Kanals mit der Formel:
+
+\[F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
+% mit Cu und Cv ergänzen
+
+% Beispiel mit niedrigen Ortsfrequenzen & Hohen Ortsfrequenzen
+% DC -> Mittlere Helligkeit
+% AC -> Differenz zur mittleren Helligkeit
+% DCT selbst verlustfrei. Produziert in den meisten Fällen schon gut komprimierbare Daten.
+
 
 \section{Quantisierung}
