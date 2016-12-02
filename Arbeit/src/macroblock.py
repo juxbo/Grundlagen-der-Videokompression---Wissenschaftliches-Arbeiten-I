@@ -15,6 +15,7 @@ class Macroblock:
         # initialize uncompressed, better might be just the generation
         # of the structure
         self.uncompressed = np.empty([2,2,8,8,3], np.float64) #deepcopy(self.blocks)
+        self.mquant=1
 
     def extract_blocks(self, macro):
         for a in range(0,2):
@@ -65,7 +66,14 @@ class Macroblock:
         
         return macroblock
 
-    def compress(self, do_subsample=True, quantize=True):
+    def setMQuant(self, mquant):
+        if mquant > 31 or mquant <= 0:
+            raise Exception("MQuant needs to be in range of 1-31")
+        else:
+            self.mquant = mquant
+
+    def compress(self, do_subsample=True, mquant=1, quantize=True):
+        self.setMQuant(mquant)
         if do_subsample:
             self.compressY(quantize)
             self.compressSU(quantize)
@@ -94,7 +102,7 @@ class Macroblock:
                 # Quantisierung
                 if quantize:
                     print("Before Quantization: ", np.count_nonzero(np.array(yDCT) == 0))
-                    yDCT = quantization.quantize(yDCT, quantization.luminance)
+                    yDCT = quantization.quantize(yDCT, quantization.intracoding, self.mquant)
                     print("After Quantization: ", np.count_nonzero(yDCT == 0))
                 # RLE
                 # ...
@@ -111,7 +119,7 @@ class Macroblock:
         uDCT = dct(subsampledBlock, False)
         # Quantisierung
         if quantize:
-            uDCT = quantization.quantize(uDCT, quantization.chrominance)
+            uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
         # ...
@@ -124,7 +132,7 @@ class Macroblock:
                 uDCT = dct(uBlock, False)
                 # Quantisierung
                 if quantize:
-                    uDCT = quantization.quantize(uDCT, quantization.chrominance)
+                    uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
                 # ...
@@ -137,7 +145,7 @@ class Macroblock:
                 vDCT = dct(vBlock, False)
                 # Quantisierung
                 if quantize:
-                    vDCT = quantization.quantize(vDCT, quantization.chrominance)
+                    vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
                 # ...
@@ -154,7 +162,7 @@ class Macroblock:
         vDCT = dct(subsampledBlock, False)
         # Quantisierung
         if quantize:
-            vDCT = quantization.quantize(vDCT, quantization.chrominance)
+            vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
         # ...
@@ -168,7 +176,7 @@ class Macroblock:
                     # DeRLE
                     # DeQuantisierung
                     if dequantize:
-                        yBlock = quantization.dequantize(yBlock, quantization.luminance)
+                        yBlock = quantization.dequantize(yBlock, quantization.intracoding, self.mquant)
                     yBlock = idct(yBlock, False)
                     self.uncompressed[x][y] = setY(self.uncompressed[x][y], yBlock)
         else:
@@ -182,7 +190,7 @@ class Macroblock:
                     # DeRLE
                     # DeQuantization
                     if dequantize:
-                        uBlock = quantization.dequantize(uBlock, quantization.chrominance)
+                        uBlock = quantization.dequantize(uBlock, quantization.intracoding, self.mquant)
                     # inverse dct
                     uBlock = idct(uBlock, False)
                     self.uncompressed[x][y] = setU(self.uncompressed[x][y], uBlock)
@@ -197,7 +205,7 @@ class Macroblock:
                     # DeRLE
                     # DeQuantisierung
                     if dequantize:
-                        vBlock = quantization.dequantize(vBlock, quantization.chrominance)
+                        vBlock = quantization.dequantize(vBlock, quantization.intracoding, self.mquant)
                     vBlock = idct(vBlock, False)
                     self.uncompressed[x][y] = setV(self.uncompressed[x][y], vBlock)
         else:
@@ -207,7 +215,7 @@ class Macroblock:
         subsampledBlock = self.compressedU
         # DeRLE
         # DeQuantisierung
-        subsampledBlock = quantization.dequantize(subsampledBlock, quantization.chrominance)
+        subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
         if dequantize:
             subsampledBlock = idct(subsampledBlock, False)
@@ -224,7 +232,7 @@ class Macroblock:
         # DeRLE
         # DeQuantisierung
         if dequantize:
-            subsampledBlock = quantization.dequantize(subsampledBlock, quantization.chrominance)
+            subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
         subsampledBlock = idct(subsampledBlock, False)
         # upsample previously subsampled block
