@@ -9,7 +9,7 @@
 % scrbook (KOMA script) settings
 \documentclass[liststotoc,bibtotoc,a4paper,12pt,parskip,final]{scrbook}
 \usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=1cm]{geometry}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % keine bitmap fonts
 \usepackage{ae,aecompl} % truetype fonts
 \usepackage[ngerman]{babel}
@@ -28,8 +28,9 @@
 \renewcommand*{\chapterheadendvskip}{\vspace{1cm}}
 % Graphics config
 \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-% \usepackage{natbib}
-% \usepackage{bibtopic}
+
+\usepackage[style=alphabetic]{biblatex}
+\addbibresource{references.bib}
 
 \begin{document}
 % 	\evensidemargin % breite seitenrand
@@ -51,8 +52,8 @@
 	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
 % 	\include{glossar}
 %	\include{anhang}
-	% \include{literaturverzeichnis}
-	\bibliographystyle{alpha}
-	\nocite{*}
-	\bibliography{references}
+	% \bibliographystyle{alpha}
+	% \nocite{*}
+	% \bibliography{references}
+	\printbibliography
 \end{document}
