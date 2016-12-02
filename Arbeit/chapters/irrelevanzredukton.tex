@@ -80,16 +80,23 @@ Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, di
 
 Wie bereits oben beschrieben neigt der menschliche Sehsinn dazu niedrige Ortsfrequenzen eher zu erkennen, als höhere. Eine Ortsfrequenz ist definiert als 'Anzahl bestimmter periodischer Erscheinungen bezogen auf einen räumlichen Abstand' (http://www.otterstedt.de/wiki/index.php/Ortsfrequenz). Wir erkennen also gröbere Strukturen mit einer niedrigen Ortsfrequenz eher als feinere Strukturen mit einer höheren.
 % Bessere Quelle finden!
-Um diesen Umstand nun auszunutzen muss das Ausgangsbild von der räumlichen Ebene auf eine Frequenzebene transformiert werden, damit anschießend die höheren Frequenzen reduziert werden können. Diese Transformation lässt sich mittels einer zweidimensionalen Diskreten Kosinus Transformation (DCT) bewerkstelligen.
+Um diesen Umstand nun auszunutzen muss das Ausgangsbild von der räumlichen Ebene auf eine Frequenzebene transformiert werden, damit anschießend, in dem darauf folgenden Schritt der Quantisierung, die höheren Frequenzen reduziert werden können. Diese Transformation lässt sich mittels einer zweidimensionalen Diskreten Kosinus Transformation (DCT) bewerkstelligen.
 
 Die DCT ist eine Sonderform der Foriertransformation, bei der eine Funktion mittels Sinusschwingungen aproximiert wird. Dieser Sonderfall nutzt hierbei den Umstand aus, dass das betrachtete Intervall begrenzt ist. Durch eine vertikale Spiegelung dieses Intervalls lassen sich die Sinus Anteile herauskürzen, wobei am Ende lediglich Kosinus Anteile übrig bleiben. % Ähhhhh, noch einmal nachlesen...
 Verarbeitet werden mit der DCT immer 8x8 Blöcke eines jeden Kanals mit der Formel:
 
-\[F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
-% mit Cu und Cv ergänzen
+\[ F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
+\begin{align*}
+	\text{wobei} \left\lbrace
+  \begin{array}{r@{}l}
+	  C_u = & \text{ } \frac{1}{\sqrt{2}} \text{ für } u=0, \text{ ansonsten } C_u=1\\
+	  C_v = & \text{ } \frac{1}{\sqrt{2}} \text{ für } v=0, \text{ ansonsten } C_v=1
+  \end{array}
+  \right.
+\end{align*}
 
 Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen beschreiben. Wie bereits zu erkennen führt die DCT oftmals selbst schon zu einer Matrix mit vielen gleichen Werten, die sich zur Anwendung weiterer verlustfreier Kompressionsmethoden eignen.
-%(https://vsr.informatik.tu-chemnitz.de/~jan/MPEG/HTML/mpeg_tech.html)
+% Beispiel angelehnt an: https://vsr.informatik.tu-chemnitz.de/~jan/MPEG/HTML/mpeg_tech.html
 
 \begin{figure}[h!]
     \centering
