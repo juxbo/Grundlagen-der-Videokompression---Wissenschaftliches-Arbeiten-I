@@ -23,15 +23,19 @@ chrominance = [[17, 18, 24, 47, 99, 99, 99, 99],
               [99, 99, 99, 99, 99, 99, 99, 99]]
 
 
-def quantize(dct, quantizer):
+def quantize(dct, quantizer, non_aggressive=True):
     result = np.empty_like(dct)
+    if non_aggressive:
+        quantizer = np.divide(quantizer, 2)
     for x, row in enumerate(dct):
         for y, coefficient in enumerate(row):
             result[x][y] = int(( coefficient / quantizer[x][y] ) + 0.5)
     return result
 
-def dequantize(idct, quantizer):
+def dequantize(idct, quantizer, non_aggressive=True):
     result = np.empty_like(idct)
+    if non_aggressive:
+        quantizer = np.divide(quantizer, 2)
     for x, row in enumerate(idct):
         for y, coefficient in enumerate(row):
             result[x][y] = coefficient * quantizer[x][y]

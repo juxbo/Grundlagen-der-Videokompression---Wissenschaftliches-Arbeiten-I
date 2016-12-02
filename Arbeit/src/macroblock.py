@@ -93,7 +93,9 @@ class Macroblock:
                 yDCT = dct(yBlock, False)
                 # Quantisierung
                 if quantize:
+                    print("Before Quantization: ", np.count_nonzero(np.array(yDCT) == 0))
                     yDCT = quantization.quantize(yDCT, quantization.luminance)
+                    print("After Quantization: ", np.count_nonzero(yDCT == 0))
                 # RLE
                 # ...
                 self.compressedY[x][y] = yDCT
