@@ -95,7 +95,7 @@ Die DCT ist eine Sonderform der Foriertransformation, bei der eine Funktion mitt
   \right.
 \end{align*}
 
-Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese zugleich die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen repräsentieren. Wie bereits zu erkennen führt die DCT oftmals selbst schon zu einer Matrix mit vielen gleichen Werten, die sich für die Anwendung weiterer, verlustfreier, Kompressionsmethoden eignet.
+Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese zugleich die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen repräsentieren. Wie bereits zu erkennen führt die DCT oftmals selbst schon durch Rundung auf ganzzahlige Ergebnisse zu einer Matrix mit vielen gleichen Werten, die sich für die Anwendung weiterer, verlustfreier, Kompressionsmethoden eignet.
 % Beispiel angelehnt an: https://vsr.informatik.tu-chemnitz.de/~jan/MPEG/HTML/mpeg_tech.html
 
 \begin{figure}[h!]
