@@ -33,7 +33,7 @@ $
 
 Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate des Luma-Wertes an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
-Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesampleten Block verlaufen. In Abbildung \ref{fig:chroma_artefacts} ist dieser Sachverhalt dargestellt. % Hell, what a sentence
+Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie in Abbildung \ref{fig:chroma_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
 
 \begin{figure}[h!]
     \centering
@@ -49,6 +49,8 @@ Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, di
 % Beispielbild einbinden? check
 % Einheitliche benamselung von Helligkeit/Farbwert
 % Ansprache mit "wir" vermeiden
+% Formel zentrieren
+% Gibt es ein besseres Wort für gesubsamplet? 'unterabgetasteten' ist genauso doof
 
 % Problematisch an scharfen farbigen Kanten
 % * RGB -> YCbCr
@@ -95,7 +97,7 @@ Verarbeitet werden mit der DCT immer 8x8 Blöcke eines jeden Kanals mit der Form
   \right.
 \end{align*}
 
-Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen beschreiben. Wie bereits zu erkennen führt die DCT oftmals selbst schon zu einer Matrix mit vielen gleichen Werten, die sich zur Anwendung weiterer verlustfreier Kompressionsmethoden eignen.
+Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese zugleich die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen repräsentieren. Wie bereits zu erkennen führt die DCT oftmals selbst schon zu einer Matrix mit vielen gleichen Werten, die sich für die Anwendung weiterer, verlustfreier, Kompressionsmethoden eignet.
 % Beispiel angelehnt an: https://vsr.informatik.tu-chemnitz.de/~jan/MPEG/HTML/mpeg_tech.html
 
 \begin{figure}[h!]
@@ -105,7 +107,7 @@ Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf ei
     \includegraphics[scale=15]{images/2-2_dct_good.png}
     \input{snippets/dct-good-dct.tex}
     \end{multicols}
-    \caption{Gut komprimierbarer 8x8 Pixelblock}
+    \caption{Mittels DCT gut komprimierbarer 8x8 Pixelblock}
     \textit{Links: Ausgangsbild, Rechts: Resultierende DCT-Matrix}
     \label{fig:dct-good}
 \end{figure}
