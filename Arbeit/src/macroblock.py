@@ -1,6 +1,7 @@
 from chroma import rgb_chroma, getY, chroma_rgb, setY, getU, setU, getV, setV
 from copy import deepcopy
 from dct import dct, idct
+import quantization
 import numpy as np
 
 class Macroblock:
@@ -64,38 +65,40 @@ class Macroblock:
         
         return macroblock
 
-    def compress(self, do_subsample=True):
+    def compress(self, do_subsample=True, quantize=True):
         if do_subsample:
-            self.compressY()
-            self.compressSU()
-            self.compressSV()
+            self.compressY(quantize)
+            self.compressSU(quantize)
+            self.compressSV(quantize)
         else:
-            self.compressY()
-            self.compressU()
-            self.compressV()
+            self.compressY(quantize)
+            self.compressU(quantize)
+            self.compressV(quantize)
 
-    def uncompress(self, was_subsampled=True):
+    def uncompress(self, was_subsampled=True, was_quantized=True):
         if was_subsampled:
-            self.uncompressY()
-            self.uncompressSU()
-            self.uncompressSV()
+            self.uncompressY(was_quantized)
+            self.uncompressSU(was_quantized)
+            self.uncompressSV(was_quantized)
         else:
-            self.uncompressY()
-            self.uncompressU()
-            self.uncompressV()
+            self.uncompressY(was_quantized)
+            self.uncompressU(was_quantized)
+            self.uncompressV(was_quantized)
 
-    def compressY(self):
+    def compressY(self, quantize=True):
         for x, vblocks in enumerate(self.blocks):
             for y, block in enumerate(vblocks):
                 yBlock = getY(block.tolist())
+                # DCT
                 yDCT = dct(yBlock, False)
                 # Quantisierung
-                # ...
+                if quantize:
+                    yDCT = quantization.quantize(yDCT, quantization.luminance)
                 # RLE
                 # ...
                 self.compressedY[x][y] = yDCT
 
-    def compressSU(self):
+    def compressSU(self, quantize=True):
         # subsample blocks to one 8x8 block
         subsampledBlock = np.empty( [8, 8], np.float64)
         for x, vblocks in enumerate(self.blocks):
@@ -105,34 +108,40 @@ class Macroblock:
                 subsampledBlock[x*4:x*4+4,y*4:y*4+4] = uBlock
         uDCT = dct(subsampledBlock, False)
         # Quantisierung
+        if quantize:
+            uDCT = quantization.quantize(uDCT, quantization.chrominance)
         # ...
         # RLE
         # ...
         self.compressedU = uDCT
 
-    def compressU(self):
+    def compressU(self, quantize=True):
         for x, vblocks in enumerate(self.blocks):
             for y, block in enumerate(vblocks):
                 uBlock = getU(block.tolist())
                 uDCT = dct(uBlock, False)
                 # Quantisierung
+                if quantize:
+                    uDCT = quantization.quantize(uDCT, quantization.chrominance)
                 # ...
                 # RLE
                 # ...
                 self.compressedU[x][y] = uDCT
 
-    def compressV(self):
+    def compressV(self, quantize=True):
         for x, vblocks in enumerate(self.blocks):
             for y, block in enumerate(vblocks):
                 vBlock = getV(block.tolist())
                 vDCT = dct(vBlock, False)
                 # Quantisierung
+                if quantize:
+                    vDCT = quantization.quantize(vDCT, quantization.chrominance)
                 # ...
                 # RLE
                 # ...
                 self.compressedV[x][y] = vDCT
 
-    def compressSV(self):
+    def compressSV(self, quantize=True):
         # subsample blocks to one 8x8 block
         subsampledBlock = np.empty( [8, 8], np.float64)
         for x, vblocks in enumerate(self.blocks):
@@ -142,73 +151,85 @@ class Macroblock:
                 subsampledBlock[x*4:x*4+4,y*4:y*4+4] = vBlock
         vDCT = dct(subsampledBlock, False)
         # Quantisierung
+        if quantize:
+            vDCT = quantization.quantize(vDCT, quantization.chrominance)
         # ...
         # RLE
         # ...
         self.compressedV = vDCT
 
-    def uncompressY(self):
-        if self.compressedY[0][0]:
+    def uncompressY(self, dequantize=True):
+        if self.compressedY[0]:
             for x, vblocks in enumerate(self.compressedY):
                 for y, block in enumerate(vblocks):
+                    yBlock = block
                     # DeRLE
                     # DeQuantisierung
-                    yBlock = idct(block, False)
+                    if dequantize:
+                        yBlock = quantization.dequantize(yBlock, quantization.luminance)
+                    yBlock = idct(yBlock, False)
                     self.uncompressed[x][y] = setY(self.uncompressed[x][y], yBlock)
         else:
             raise Exception("No compressed data there")
 
-    def uncompressU(self):
+    def uncompressU(self, dequantize= True):
         if self.compressedU[0][0]:
             for x, vblocks in enumerate(self.compressedU):
                 for y, block in enumerate(vblocks):
+                    uBlock = block
                     # DeRLE
-                    # DeQuantisierung
-                    uBlock = idct(block, False)
+                    # DeQuantization
+                    if dequantize:
+                        uBlock = quantization.dequantize(uBlock, quantization.chrominance)
+                    # inverse dct
+                    uBlock = idct(uBlock, False)
                     self.uncompressed[x][y] = setU(self.uncompressed[x][y], uBlock)
         else:
             raise Exception("No compressed data there")
 
-    def uncompressV(self):
+    def uncompressV(self, dequantize=True):
         if self.compressedV[0][0]:
             for x, vblocks in enumerate(self.compressedV):
                 for y, block in enumerate(vblocks):
+                    vBlock = block
                     # DeRLE
                     # DeQuantisierung
-                    vBlock = idct(block, False)
+                    if dequantize:
+                        vBlock = quantization.dequantize(vBlock, quantization.chrominance)
+                    vBlock = idct(vBlock, False)
                     self.uncompressed[x][y] = setV(self.uncompressed[x][y], vBlock)
         else:
             raise Exception("No compressed data there")
 
-    def uncompressSU(self):
-        if self.compressedU[0]:
-            subsampledBlock = self.compressedU
-            # DeRLE
-            # DeQuantisierung
+    def uncompressSU(self, dequantize=True):
+        subsampledBlock = self.compressedU
+        # DeRLE
+        # DeQuantisierung
+        subsampledBlock = quantization.dequantize(subsampledBlock, quantization.chrominance)
+        # Inverse DCT
+        if dequantize:
             subsampledBlock = idct(subsampledBlock, False)
-            # upsample previously subsampled block
-            uBlock = self.upsample(subsampledBlock)
-            for x, vblocks in enumerate(self.uncompressed):
-                for y, block in enumerate(vblocks):
-                    # get block again
-                    block = uBlock[x*8:x*8+8,y*8:y*8+8]
-                    self.uncompressed[x][y] = setU(self.uncompressed[x][y], block)
-        else:
-            raise Exception("No compressed data there")
+        # upsample previously subsampled block
+        uBlock = self.upsample(subsampledBlock)
+        for x, vblocks in enumerate(self.uncompressed):
+            for y, block in enumerate(vblocks):
+                # get block again
+                block = uBlock[x*8:x*8+8,y*8:y*8+8]
+                self.uncompressed[x][y] = setU(self.uncompressed[x][y], block)
 
-    def uncompressSV(self):
-        if self.compressedU[0]:
-            subsampledBlock = self.compressedV
-            # DeRLE
-            # DeQuantisierung
-            subsampledBlock = idct(subsampledBlock, False)
-            # upsample previously subsampled block
-            vBlock = self.upsample(subsampledBlock)
-            for x, vblocks in enumerate(self.uncompressed):
-                for y, block in enumerate(vblocks):
-                    # get block again
-                    block = vBlock[x*8:x*8+8,y*8:y*8+8]
-                    self.uncompressed[x][y] = setV(self.uncompressed[x][y], block)
-        else:
-            raise Exception("No compressed data there")
+    def uncompressSV(self, dequantize=True):
+        subsampledBlock = self.compressedV
+        # DeRLE
+        # DeQuantisierung
+        if dequantize:
+            subsampledBlock = quantization.dequantize(subsampledBlock, quantization.chrominance)
+        # Inverse DCT
+        subsampledBlock = idct(subsampledBlock, False)
+        # upsample previously subsampled block
+        vBlock = self.upsample(subsampledBlock)
+        for x, vblocks in enumerate(self.uncompressed):
+            for y, block in enumerate(vblocks):
+                # get block again
+                block = vBlock[x*8:x*8+8,y*8:y*8+8]
+                self.uncompressed[x][y] = setV(self.uncompressed[x][y], block)
 
