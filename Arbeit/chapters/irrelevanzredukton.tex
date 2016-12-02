@@ -32,7 +32,7 @@ $
 
 Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
-Das Chroma Subsampling bietet somit eine enorme Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie in Abbildung \ref{fig:chroma_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
+Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie in Abbildung \ref{fig:chroma_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
 
 \begin{figure}[h!]
     \centering
@@ -117,3 +117,15 @@ Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf ei
 % DCT = Mittels Linearkombination von Kosinus Schwingungen lässt sich ein 8x8 Pixelblock darstellen -> Vllt. in Fazit?
 
 \section{Quantisierung}
+
+Im vorigen Schritt wurde durch Anwendung der Diskreten Kosinus Transformation eine Matrix mit den korrespondieren Ortsfrequenzen eines 8x8 Pixelblocks gewonnen. Um nun tatsächlich eine Reduktion der höheren Ortsfrequenzen zu erreichen wird die Methode der Quantisierung angewandt. Hierbei wird eine ganzzahlige Division eines jeden DCT Koeffizient mit einem Quantisierungswert vorgenommen. Das abgerundete Ergebnis ist dann der quantisierte Wert.
+
+% Uniform quantizer -> Stufenquantisierung
+
+Um die errechneten Ortsfrequenzen in Relation zur Wahrnehmung des menschlichen Auges zu reduzieren wird hierfür eine Quantisierungsmatrix verwendet. Welche separate Werte für jeden DCT Koeffizienten beinhaltet. Im Fall von MPEG-1 wird hierfür 
+
+% Default Intracoding Tabelle
+% DC Wert wird mit fixed quantizer = 8 quntisiert, da luminanz voll wichtig ist
+% AC Werte werden nach Formel i[u,v] =  8 * c[u,v] / (q * m[u,v]) gebildet und abgerundet
+% Scaling Faktor kann während des Encoing prozesses angepasst werden
+% Quantisierungsmatrix kann während des Encoing prozesses angepasst werden
