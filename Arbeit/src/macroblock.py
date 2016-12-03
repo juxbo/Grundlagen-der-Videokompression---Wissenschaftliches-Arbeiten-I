@@ -1,6 +1,7 @@
 from chroma import rgb_chroma, getY, chroma_rgb, setY, getU, setU, getV, setV
 from copy import deepcopy
 from dct import dct, idct
+import entropycoder as ec
 import quantization
 import numpy as np
 
@@ -105,6 +106,7 @@ class Macroblock:
                     yDCT = quantization.quantize(yDCT, quantization.intracoding, self.mquant)
                     print("After Quantization: ", np.count_nonzero(yDCT == 0))
                 # RLE
+                yDCT = ec.encode(yDCT)
                 # ...
                 self.compressedY[x][y] = yDCT
 
@@ -122,6 +124,7 @@ class Macroblock:
             uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
+        uDCT = ec.encode(uDCT)
         # ...
         self.compressedU = uDCT
 
@@ -135,6 +138,7 @@ class Macroblock:
                     uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
+                uDCT = ec.encode(uDCT)
                 # ...
                 self.compressedU[x][y] = uDCT
 
@@ -148,6 +152,7 @@ class Macroblock:
                     vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
+                vDCT = ec.encode(vDCT)
                 # ...
                 self.compressedV[x][y] = vDCT
 
@@ -165,6 +170,7 @@ class Macroblock:
             vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
+        vDCT = ec.encode(vDCT)
         # ...
         self.compressedV = vDCT
 
@@ -174,6 +180,7 @@ class Macroblock:
                 for y, block in enumerate(vblocks):
                     yBlock = block
                     # DeRLE
+                    yBlock = ec.decode(yBlock)
                     # DeQuantisierung
                     if dequantize:
                         yBlock = quantization.dequantize(yBlock, quantization.intracoding, self.mquant)
@@ -188,6 +195,7 @@ class Macroblock:
                 for y, block in enumerate(vblocks):
                     uBlock = block
                     # DeRLE
+                    uBlock  = ec.decode(uBlock)
                     # DeQuantization
                     if dequantize:
                         uBlock = quantization.dequantize(uBlock, quantization.intracoding, self.mquant)
@@ -203,6 +211,7 @@ class Macroblock:
                 for y, block in enumerate(vblocks):
                     vBlock = block
                     # DeRLE
+                    vBlock = ec.decode(vBlock)
                     # DeQuantisierung
                     if dequantize:
                         vBlock = quantization.dequantize(vBlock, quantization.intracoding, self.mquant)
@@ -214,6 +223,7 @@ class Macroblock:
     def uncompressSU(self, dequantize=True):
         subsampledBlock = self.compressedU
         # DeRLE
+        subsampledBlock = ec.decode(subsampledBlock)
         # DeQuantisierung
         subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
@@ -230,6 +240,7 @@ class Macroblock:
     def uncompressSV(self, dequantize=True):
         subsampledBlock = self.compressedV
         # DeRLE
+        subsampledBlock = ec.decode(subsampledBlock)
         # DeQuantisierung
         if dequantize:
             subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)

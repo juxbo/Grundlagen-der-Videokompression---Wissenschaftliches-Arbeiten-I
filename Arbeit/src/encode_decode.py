@@ -48,7 +48,7 @@ def encode(bild, subsample=True):
             ymul = y*16
             thisMacroblock = bildInYUV[xmul:xmul+16, ymul:ymul+16]
             macroblock = Macroblock(thisMacroblock)
-            macroblock.compress(subsample, 31)
+            macroblock.compress(subsample, 1)
             compressedSize += macroblock.size()
             compressedMacroblocks[x][y] = macroblock
 
