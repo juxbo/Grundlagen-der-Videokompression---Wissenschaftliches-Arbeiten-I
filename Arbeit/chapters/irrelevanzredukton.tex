@@ -29,7 +29,7 @@ Das Chroma Subsampling nutzt den Umstand aus, dass Helligkeitsvarianzen besser w
 	U = & \text{ } (B - Y) \cdot 0.493 \\
 	V = & \text{ } (R - Y) \cdot 0.877
 \end{align*}
-Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
+Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von insgesamt 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
 Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie im Anhang \ref{appendix:subsampling_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
 
@@ -81,13 +81,13 @@ Die DCT ist eine Sonderform der Foriertransformation, bei der eine Funktion mitt
   F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \\
   \text{wobei} \left\lbrace
   \begin{array}{r@{}l}
-	  C_u = & \text{ } \frac{1}{\sqrt{2}} \text{ für } u=0, \text{ ansonsten } C_u=1\\
-	  C_v = & \text{ } \frac{1}{\sqrt{2}} \text{ für } v=0, \text{ ansonsten } C_v=1
+	C_u = & \text{ } \frac{1}{\sqrt{2}} \text{ für } u=0, \text{ ansonsten } C_u=1\\
+	C_v = & \text{ } \frac{1}{\sqrt{2}} \text{ für } v=0, \text{ ansonsten } C_v=1
   \end{array}
   \right.
 \end{align*}
 
-Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock (siehe Anhang \ref{dct-good-luma}), welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der so genannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese zugleich die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen repräsentieren. Wie bereits zu erkennen führt die DCT oftmals selbst schon durch Rundung auf ganzzahlige Ergebnisse zu einer Matrix mit vielen gleichen Werten, die sich für die Anwendung weiterer, verlustfreier, Kompressionsmethoden eignet.
+Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf einen schwarz-weißen 8x8 Pixelblock, welcher aus jeweils einer horizontalen und einer vertikalen Kosinus Schwingung besteht. Der sogenannte DC Wert ist der erste Wert der Matrix und gibt die mittlere Helligkeit an. Alle anderen Komponenten beschreiben die relative Abweichung zu diesem Wert und werden gemeinhin als AC Werte betitelt, wobei diese zugleich die zum unteren rechten Rand hin höher werdenden Ortsfrequenzen repräsentieren. Wie bereits zu erkennen führt die DCT oftmals selbst schon durch Rundung auf ganzzahlige Ergebnisse zu einer Matrix mit vielen gleichen Werten, die sich für die Anwendung weiterer, verlustfreier, Kompressionsmethoden eignet.
 % Beispiel angelehnt an: https://vsr.informatik.tu-chemnitz.de/~jan/MPEG/HTML/mpeg_tech.html
 
 \begin{figure}[h!]
@@ -120,6 +120,7 @@ Im Fall von MPEG-1 wird hierfür ein Uniform Scalar Quantizer verwedet, bei dem 
 Im Anhang \ref{appendix:qauntisierung} ist die angewandte Quantisierung exemplarisch an einem Beispielbild mit der im MPEG-1 Standard voreingestellten Quantisierungsmatrix sowie Quantisierungsfaktoren von eins, 16 und 31 dargestellt. % Für intracoding
 Bei höhreren Quantisierungsfaktoren sind hier deutliche Qualitätsverluste zu erkennen, wobei die groben Strukturen des Bildes aber erhalten bleiben.
 
+Durch die Anwendung der DCT wird ein eingehender 8x8 Pixelblock also in eine Darstellung transformiert, die es erlaubt mittels der Quantisierung vor allem enthaltene höhere Ortsfrequenzen zu reduzieren. Diese Prozesse führen zunächst jedoch nicht direkt zu einer Datenreduktion, da trotz des erhöhten Anteils gleicher Werte in der Matrix eben diese Werte auch gespeichert werden müssen. Allerdings wurde erreicht, dass die Entropiekodierung, welche im nachfolgenden Kapitel erläutert wird, bessere Kompressionsergebnisse erzielen kann.
 % Default Intracoding Tabelle
 % DC Wert wird mit fixed quantizer = 8 quntisiert, da luminanz voll wichtig ist
 % AC Werte werden nach Formel i[u,v] =  8 * c[u,v] / (q * m[u,v]) gebildet und abgerundet
