@@ -8,7 +8,7 @@
 
 % scrbook (KOMA script) settings
 \documentclass[liststotoc,bibtotoc,a4paper,12pt,parskip,final]{scrbook}
-\usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=0cm]{geometry}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=35mm,bindingoffset=0cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % keine bitmap fonts
 \usepackage{ae,aecompl} % truetype fonts
@@ -21,6 +21,7 @@
 \usepackage{setspace}
 \usepackage{color}
 \usepackage{listings}
+\usepackage[toc,page]{appendix}
 \hbadness = 10000 % -> disable ``underfull \hbox'' warnings
 \usepackage[pdftex,bookmarks=true]{hyperref} % -> automatische ``bookmarks''
 \parindent 0pt % keine einr�ckung nach abs�tzen
@@ -42,9 +43,7 @@
   xleftmargin=\parindent,
   language=C,
   showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{green!40!black},
-  commentstyle=\itshape\color{purple!40!black},
+%  basicstyle=\footnotesize\ttfamily,
   identifierstyle=\color{blue},
   stringstyle=\color{orange},
 }
@@ -79,7 +78,7 @@
 	\frontmatter % keine kapitelnummern, r�mische seitenzahlen
 	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
 % 	\include{glossar}
-%	\include{anhang}
+	\include{chapters/anhang}
 	% \bibliographystyle{alpha}
 	% \nocite{*}
 	% \bibliography{references}

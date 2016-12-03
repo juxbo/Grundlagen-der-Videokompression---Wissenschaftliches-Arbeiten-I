@@ -24,24 +24,15 @@ Bei der Videokompression werden im wesentlichen zwei Eigenschaften zur Reduktion
 
 Das Chroma Subsampling nutzt den Umstand aus, dass Helligkeitsvarianzen besser wahrgenommen werden, als Farbvarianzen. Zumeist liegen die Bildinformationen im Ausgangsformat jedoch im RGB Farbmodell vor, wobei hier die Helligkeitswerte in jeden Kanal eingehen. Um nun aber die Chrominanz bei gleichbleibender Auflösung der Luminanz zu reduzieren wird eine getrennte Darstellung dieser Informationen benötigt. Hierfür wird im MPEG-1 Standard die YC$_B$C$_R$ Darstellung verwendet, wobei das Y für die Luminanz steht und in C$_B$ und C$_R$ die Farbwerte codiert werden. Die Umrechnung lässt sich mittels folgender Formeln realisieren \cite{itu-t_recommendation_1995}:
 
-$
-Y = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B \\
-U = (B - Y) \cdot 0.493 \\
-V = (R - Y) \cdot 0.877
-$
-
+\begin{align*}
+	Y = & \text{ } 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B \\
+	U = & \text{ } (B - Y) \cdot 0.493 \\
+	V = & \text{ } (R - Y) \cdot 0.877
+\end{align*}
 Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
-Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie in Abbildung \ref{fig:chroma_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
+Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie im Anhang \ref{appendix:subsampling_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[scale=10]{images/2-1_chroma_artefacts_original.png}
-    \includegraphics[scale=10]{images/2-1_chroma_artefacts_sampled.png}
-    \caption{Artefakte durch Chroma Subsampling}
-    \textit{Links: Original, Rechts: Subsampled. Die rechte Kante des blauen Farbblocks liegt in gesubsampleten 2x2 Blöcken, wodurch Artefakte entstehen. Die linke Kante liegt zwischen zwei 2x2 Blöcken, weshalb es zu keiner falschen Darstellung kommt.}
-    \label{fig:chroma_artefacts}
-\end{figure}
 
 % TODO:
 % Referenz auf Implementierung in den Anhang?
@@ -85,9 +76,9 @@ Um diesen Umstand nun auszunutzen muss das Ausgangsbild von der räumlichen Eben
 
 Die DCT ist eine Sonderform der Foriertransformation, bei der eine Funktion mittels Sinusschwingungen approximiert wird. Die Fourriertransformation hat allerdings unter anderem den Nachteil, dass für jeden abgetasteten Punkt ein Tupel aus Amplitude und Phase bzw. Sinus und Kosinus Koeffizienten gespeichert werden muss. Die DCT nutzt nun den Umstand aus, dass das betrachtete Intervall begrenzt ist. Durch eine vertikale Spiegelung dieses Intervalls lassen sich die Sinus Anteile herauskürzen, wobei am Ende lediglich Kosinus Anteile übrig bleiben, also nur ein Koeffizient pro abgetasteten Punkt gespeichert werden muss. Des Weiteren bewirkt die Spiegelung, dass Start- und Endpunkt equivalent sind. Da die Fouriertransformation von einer unendlichen Folge ausgeht, muss der letzte Koeffizient den ggf. großen Unterschied zwischen Start- und Endpunkt ausgleichen. Sind diese Punkte aber equivalent, wird die Kraft des letzten Koeffizienten nicht verschwendet \cite{symes_peter_digital_2004}. Verarbeitet werden mit der zweidimensionalen DCT immer 8x8 Blöcke eines jeden Kanals mit der Formel:
 
-\[ F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \]
 \begin{align*}
-	\text{wobei} \left\lbrace
+  F(u,v) = \frac{1}{4} C_uC_v\sum_{x=0}^7 \sum_{y=0}^7 f(x,y) \cos \left(\frac{(2x+1)u\pi}{16}\right) \cos\left(\frac{(2y+1)v\pi}{16}\right) \\
+  \text{wobei} \left\lbrace
   \begin{array}{r@{}l}
 	  C_u = & \text{ } \frac{1}{\sqrt{2}} \text{ für } u=0, \text{ ansonsten } C_u=1\\
 	  C_v = & \text{ } \frac{1}{\sqrt{2}} \text{ für } v=0, \text{ ansonsten } C_v=1
