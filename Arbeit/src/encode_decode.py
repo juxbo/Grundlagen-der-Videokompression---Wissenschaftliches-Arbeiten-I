@@ -74,7 +74,7 @@ def decode(compressedMacroblocks, subsample=True):
 
 if __name__ == "__main__":
     # show original image
-    bild = scipy.misc.imread('./test_img/lena.jpg')
+    bild = scipy.misc.imread('./test_img/brook.jpg')
     # bild = scipy.misc.imread('./test_img/lena_small.jpg')
     # bild = example1()
     img = create_img(bild)
