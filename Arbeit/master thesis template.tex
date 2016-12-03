@@ -8,7 +8,7 @@
 
 % scrbook (KOMA script) settings
 \documentclass[liststotoc,bibtotoc,a4paper,12pt,parskip,final]{scrbook}
-\usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=1cm]{geometry}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=30mm,bottom=40mm,bindingoffset=0cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % keine bitmap fonts
 \usepackage{ae,aecompl} % truetype fonts
@@ -18,19 +18,47 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{multicol} % Multicolumn layout
-\usepackage{setspace} 
+\usepackage{setspace}
+\usepackage{color}
+\usepackage{listings}
 \hbadness = 10000 % -> disable ``underfull \hbox'' warnings
 \usepackage[pdftex,bookmarks=true]{hyperref} % -> automatische ``bookmarks''
 \parindent 0pt % keine einr�ckung nach abs�tzen
 
 % vspace, der vor beginn und nach Ende eines Chapters eingügt wird
-\renewcommand*{\chapterheadstartvskip}{\vspace*{1cm}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1cm}}
 % Graphics config
 \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 
 \usepackage[style=alphabetic]{biblatex}
 \addbibresource{references.bib}
+
+% Config listings
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
 
 \begin{document}
 % 	\evensidemargin % breite seitenrand
