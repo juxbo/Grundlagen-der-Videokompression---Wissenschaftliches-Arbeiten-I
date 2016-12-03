@@ -118,12 +118,13 @@ Die Abbildung \ref{fig:dct-good} zeigt das Resultat einer angewandten DCT auf ei
 
 \section{Quantisierung}
 
-Im vorigen Schritt wurde durch Anwendung der Diskreten Kosinus Transformation eine Matrix mit den korrespondieren Ortsfrequenzen eines 8x8 Pixelblocks gewonnen. Um nun tatsächlich eine Reduktion der höheren Ortsfrequenzen zu erreichen wird die Methode der Quantisierung angewandt. Hierbei wird eine ganzzahlige Division eines jeden DCT Koeffizient mit einem Quantisierungswert vorgenommen. Das abgerundete Ergebnis ist dann der quantisierte Wert.
+Im vorigen Schritt wurde durch Anwendung der Diskreten Kosinus Transformation eine Matrix mit den korrespondieren Ortsfrequenzen eines 8x8 Pixelblocks gewonnen. Um nun tatsächlich eine Reduktion der höheren Ortsfrequenzen zu erreichen wird die Methode der Quantisierung angewandt. Hierbei wird eine ganzzahlige Division eines jeden DCT Koeffizienten mit einem Quantisierungswert vorgenommen. Das abgerundete Ergebnis ist dann der quantisierte Wert. Durch diese Division und Rundung wird versucht die bisher noch hohen Koeffizienten zu verkleinern, sowie in den höheren Frequenzbereichen möglichst auf Ergebnisse gleich Null zu kommen.
 
 % Uniform quantizer -> Stufenquantisierung
+Im Fall von MPEG-1 wird hierfür ein Uniform Scalar Quantizer verwedet, bei dem die Eingangswerte durch Division der Schrittgröße auf Bereiche gleicher Größe abgebildet werden, wobei eine stufenähnliche Charakteristik entsteht. \cite{symes_peter_digital_2004}. Um die errechneten Ortsfrequenzen in Relation zur Wahrnehmung des menschlichen Auges zu reduzieren wird hierfür eine Quantisierungsmatrix verwendet. Diese beinhaltet separate Werte für jeden DCT Koeffizienten. Die Schrittgröße setzt sich für AC-Werte zusammen aus dem korrespondierenden Quantisierungswert der Quantisierungsmatrix und einem Quantisierungsfaktor. Der Quantisierungsfaktor dient der Steuerung der Bildqualität und kann einen Wert zwischen 1 und 31 annehmen, wobei ein Quantisierungsfaktor von 1 für eine hohe Bildqualität sorgt, ein Faktor von 31 hingegen für eine stark reduzierte. Da das Auge sensibel gegenüber großräumigen Luminanzfehlern ist, wird der DC durch eine feste Schrittgröße von 8 dividiert. \cite{ISO13586} Eine Implementierung des vorgestellten Algorithmus könnte wiefolgt aussehen:
 
-Um die errechneten Ortsfrequenzen in Relation zur Wahrnehmung des menschlichen Auges zu reduzieren wird hierfür eine Quantisierungsmatrix verwendet. Welche separate Werte für jeden DCT Koeffizienten beinhaltet. Im Fall von MPEG-1 wird hierfür 
-\cite{ISO13586}
+\lstinputlisting[language=Python]{snippets/quantizer.py}
+
 % Default Intracoding Tabelle
 % DC Wert wird mit fixed quantizer = 8 quntisiert, da luminanz voll wichtig ist
 % AC Werte werden nach Formel i[u,v] =  8 * c[u,v] / (q * m[u,v]) gebildet und abgerundet
