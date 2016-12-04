@@ -31,7 +31,7 @@ Das Chroma Subsampling nutzt den Umstand aus, dass Helligkeitsvarianzen besser w
 \end{align*}
 Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Samplingrate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von insgesamt 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
-Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie im Anhang \ref{appendix:subsampling_artefacts} dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
+Das Chroma Subsampling bietet somit eine gute Möglichkeit der Kompression, die allerdings nicht verlustfrei abläuft. Artefakte können, wie in Abbildung \ref{fig:chroma_artefacts} im Anhang dargestellt, bei Verwendung dieser Methode vor allem bei scharfen, farbigen Kanten entstehen, wenn diese durch einen gesubsampleten Block verlaufen.
 
 
 % TODO:
@@ -117,7 +117,7 @@ Im Fall von MPEG-1 wird hierfür ein Uniform Scalar Quantizer verwedet, bei dem 
 
 \lstinputlisting[language=Python, caption=Implementierung des Quantisierungsprozesses nach MPEG-1 Standard ohne Clipping, label=lst:quantizer]{snippets/quantizer.py}
 
-Im Anhang \ref{appendix:qauntisierung} ist die angewandte Quantisierung exemplarisch an einem Beispielbild mit der im MPEG-1 Standard voreingestellten Quantisierungsmatrix sowie Quantisierungsfaktoren von eins, 16 und 31 dargestellt. % Für intracoding
+In Abbildung \ref{fig:quantization_multi_mquants} des Anhangs ist die angewandte Quantisierung exemplarisch an einem Beispielbild mit der im MPEG-1 Standard voreingestellten Quantisierungsmatrix (siehe Anhang, Tabelle \ref{tab:default_quant}) sowie Quantisierungsfaktoren von eins, 16 und 31 dargestellt. % Für intracoding
 Bei höhreren Quantisierungsfaktoren sind hier deutliche Qualitätsverluste zu erkennen, wobei die groben Strukturen des Bildes aber erhalten bleiben.
 
 Durch die Anwendung der DCT wird ein eingehender 8x8 Pixelblock also in eine Darstellung transformiert, die es erlaubt mittels der Quantisierung vor allem enthaltene höhere Ortsfrequenzen zu reduzieren. Diese Prozesse führen zunächst jedoch nicht direkt zu einer Datenreduktion, da trotz des erhöhten Anteils gleicher Werte in der Matrix eben diese Werte auch gespeichert werden müssen. Allerdings wurde erreicht, dass die Entropiekodierung, welche im nachfolgenden Kapitel erläutert wird, bessere Kompressionsergebnisse erzielen kann.

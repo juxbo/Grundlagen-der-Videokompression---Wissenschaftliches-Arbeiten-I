@@ -1,6 +1,7 @@
-\begin{appendices}
-\chapter{Chroma Subsampling Artefakte}
-\label{appendix:subsampling_artefacts}
+%\begin{appendices}
+\appendix
+\chapter{Weitere Abbildungen und Tabellen}
+\label{appendix:abb_tab}
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=10]{images/2-1_chroma_artefacts_original.png}
@@ -9,9 +10,6 @@
     \textit{Links: Original, Rechts: Subsampled. Die rechte Kante des blauen Farbblocks liegt in gesubsampleten 2x2 Blöcken, wodurch Artefakte entstehen. Die linke Kante liegt zwischen zwei 2x2 Blöcken, weshalb es zu keiner falschen Darstellung kommt.}
     \label{fig:chroma_artefacts}
 \end{figure}
-
-\chapter{Quantisierung}
-\label{appendix:qauntisierung}
 
 \begin{figure}[h!]
     \centering
@@ -22,6 +20,8 @@
     \caption{Ergebnis der Quantisierung mit verschiedenen Quantisierungsfaktoren}
     \textit{Oben links: Original, Oben rechts: Quantisiert mit Faktor 1, Unten links: Quantisiert mit Faktor 16, Unten rechts: Quantisiert mit Faktor 31.\\
     Mit zunehmendem Quantisierungsfaktor ist ein ansteigender Verlust der Bildqualität zu beobachten, wobei grobe Strukturen weitestgehend erhalten bleiben. Original nach \cite{brooke_cagle__2016}}
-    \label{fig:chroma_artefacts}
+    \label{fig:quantization_multi_mquants}
 \end{figure}
-\end{appendices}
+
+\input{snippets/default_quantization_matrix.tex}
+%\end{appendices}
