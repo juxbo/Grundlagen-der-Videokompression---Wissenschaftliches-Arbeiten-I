@@ -2,6 +2,10 @@
 import itertools
 import numpy as np
 import math
+import huffman
+import collections
+
+
 class descriptor:
     def __init__(self):
         self.type = "descriptor"
@@ -14,18 +18,30 @@ class ac(descriptor):
         self.type = "ac"
         self.value = value
         self.timesZero = timesZero
+        self.code = None
+        self.addBits = None
+
     def length(self):
-        sum = 0
-        if self.timesZero > 0:
-            3
-        return sum + 1
+        if self.code is None or self.addBits is None:
+            sum = 0
+            if self.timesZero > 0:
+                3
+            return sum + 1
+        else:
+            return len(self.code) + len(self.addBits)
 
 class eob(descriptor):
     """ Descriptor that indicates End of block """
     def __init__(self):
         self.type = "eob"
+        self.code = None
+        self.value = "eob"
+
     def length(self):
-        return 4
+        if self.code is None:
+            return 4
+        else:
+            return len(self.code)
 
 def encode(dct):
     # RLE
@@ -131,6 +147,59 @@ def zigZag(dim):
 
 
 
+def VLC_do(sequences, j):
+    t = Huffman()
+    if j.type == "eob":
+        sequences.append("eob")
+    else:
+        value = j.value
+        zeros = j.timesZero
+        category = t.getCategoryByValue(int(value))
+        sequences.append(str(zeros) + "/" + str(category))
+    return sequences
+
+def VLC(macroblocks):
+    """ apply variable length encoding to list of macroblocks """
+    t = Huffman()
+    sequences = []
+    # extract blocks from macroblocks to a flat list
+    blocks = []
+    for x in macroblocks:
+        for y in x:
+            for h in x:
+                for j in (h.compressedU, h.compressedV, h.compressedY):
+                    flatlist = np.array(j).flatten()
+                    for b in flatlist:
+                        if isinstance(b, list):
+                            blocks.extend(b)
+                        else:
+                            blocks.append(b)
+    # generate sequence to generate huffman codes
+    for j in blocks:
+        if j.type == "eob":
+            sequences.append("eob")
+        else:
+            value = j.value
+            zeros = j.timesZero
+            category = t.getCategoryByValue(int(value))
+            sequences.append(str(zeros) + "/" + str(category))
+    # generate huffman table
+    t.generateHuffmanTable(sequences)
+    # apply codeword and additional bits to blocks
+    # and count length
+    size = 0
+    for block in blocks:
+        if j.type == "eob":
+            j.code = t.getCodeByRC("eob")
+        else:
+            value = j.value
+            zeros = j.timesZero
+            category = t.getCategoryByValue(int(value))
+            j.code = t.getCodeByRC(str(zeros) + "/" + str(category))
+            j.addBits = t.getAdditionalBits(int(value))
+        size += j.length()
+
+    return size
 
 
 
@@ -138,20 +207,27 @@ class Huffman:
     """ Static class which hold the precoded huffman table """
     categories = []
     table = []
+    inverse_table = []
 
-    def getHuffman(self):
-        """ :return: generated huffman table """
-        if len(self.categories) == 0:
-            self.categories = self.generateHuffmanCategories()
-        return self.categories
+    def __init__(self):
+        self.categories = self.generateHuffmanCategory()
 
-    def getAdditionalBits(self, value):
-        self.getHuffman()
+    def getCategoryByValue(self, value):
         if value == 0:
             raise Exception("0 is an invalid value")
         if value > 0:
             value -= 1
-        return self.categories[1023 + value]
+        return int(self.categories[1023 + value][2])
+
+    def getAdditionalBits(self, value):
+        if value == 0:
+            raise Exception("0 is an invalid value")
+        if value > 0:
+            value -= 1
+        return self.categories[1023 + value][1]
+
+    def getCodeByRC(self, RC):
+        return self.table[RC]
 
     def generateHuffmanCategory(self):
         """ generate predefined huffman table
@@ -174,8 +250,14 @@ class Huffman:
         table.sort()
         return table
 
-    def generateCodeWords(self):
-        raise NotImplementedError
-
-    def generateHuffmanTable(self):
-        raise NotImplementedError
+    def generateHuffmanTable(self, sequences = None):
+        # generates huffman table
+        # might changed to get direct input frm stream
+        if sequences is  None:
+            sequences = []
+            for category in range(0,11):
+                for run in range(0,65):
+                    sequences.append(str(run) + "/" + str(category))
+            sequences.append("eob")
+        self.table = huffman.codebook(collections.Counter(sequences).items())
+        self.inverse_table = inv_map = {v: k for k, v in self.table.items()}
