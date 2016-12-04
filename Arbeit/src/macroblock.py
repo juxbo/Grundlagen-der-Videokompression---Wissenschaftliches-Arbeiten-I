@@ -44,9 +44,14 @@ class Macroblock:
     def size(self):
         """ returns a count of containing
         elements in compressed form """
-        size = np.array(self.compressedY).size
-        size += np.array(self.compressedU).size
-        size += np.array(self.compressedV).size
+        size = 0
+        for y in self.compressedY:
+            for z in y:
+                for i in z:
+                    size +=i.length()
+        for x in (self.compressedU, self.compressedV):
+            for i in x:
+                size +=i.length()
         return size
 
     def upsample(self, block):
@@ -102,9 +107,7 @@ class Macroblock:
                 yDCT = dct(yBlock, False)
                 # Quantisierung
                 if quantize:
-                    print("Before Quantization: ", np.count_nonzero(np.array(yDCT) == 0))
                     yDCT = quantization.quantize(yDCT, quantization.intracoding, self.mquant)
-                    print("After Quantization: ", np.count_nonzero(yDCT == 0))
                 # RLE
                 yDCT = ec.encode(yDCT)
                 # ...

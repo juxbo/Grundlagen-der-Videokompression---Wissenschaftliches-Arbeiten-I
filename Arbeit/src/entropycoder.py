@@ -5,7 +5,7 @@ import math
 class descriptor:
     def __init__(self):
         self.type = "descriptor"
-    def length():
+    def length(self):
         raise NotImplementedError
 
 class ac(descriptor):
@@ -14,11 +14,18 @@ class ac(descriptor):
         self.type = "ac"
         self.value = value
         self.timesZero = timesZero
+    def length(self):
+        sum = 0
+        if self.timesZero > 0:
+            3
+        return sum + 1
 
 class eob(descriptor):
     """ Descriptor that indicates End of block """
     def __init__(self):
         self.type = "eob"
+    def length(self):
+        return 4
 
 def encode(dct):
     # RLE
@@ -129,13 +136,14 @@ def zigZag(dim):
 
 class Huffman:
     """ Static class which hold the precoded huffman table """
+    categories = []
     table = []
 
     def getHuffman(self):
         """ :return: generated huffman table """
-        if len(self.table) == 0:
-            self.table = self.generateHuffman()
-        return self.table
+        if len(self.categories) == 0:
+            self.categories = self.generateHuffmanCategories()
+        return self.categories
 
     def getAdditionalBits(self, value):
         self.getHuffman()
@@ -143,9 +151,9 @@ class Huffman:
             raise Exception("0 is an invalid value")
         if value > 0:
             value -= 1
-        return self.table[1023 + value]
+        return self.categories[1023 + value]
 
-    def generateHuffman(self):
+    def generateHuffmanCategory(self):
         """ generate predefined huffman table
         :return: array of [Value, Additional Bits, Category]"""
         table = []
@@ -166,4 +174,8 @@ class Huffman:
         table.sort()
         return table
 
+    def generateCodeWords(self):
+        raise NotImplementedError
 
+    def generateHuffmanTable(self):
+        raise NotImplementedError
