@@ -145,7 +145,7 @@ class Macroblock:
                 # DCT
                 yDCT = dct(yBlock, False)
                 # Quantisierung
-                if quantize:
+                if quantize and self.mquant is not None:
                     yDCT = quantization.quantize(yDCT, quantization.intracoding, self.mquant)
                 # RLE
                 yDCT = ec.encode(yDCT)
@@ -165,7 +165,7 @@ class Macroblock:
                 subsampledBlock[x*4:x*4+4, y*4:y*4+4] = uBlock
         uDCT = dct(subsampledBlock, False)
         # Quantisierung
-        if quantize:
+        if quantize and self.mquant is not None:
             uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
@@ -182,7 +182,7 @@ class Macroblock:
                 uBlock = getU(block.tolist())
                 uDCT = dct(uBlock, False)
                 # Quantisierung
-                if quantize:
+                if quantize and self.mquant is not None:
                     uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
@@ -199,7 +199,7 @@ class Macroblock:
                 vBlock = getV(block.tolist())
                 vDCT = dct(vBlock, False)
                 # Quantisierung
-                if quantize:
+                if quantize and self.mquant is not None:
                     vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
                 # ...
                 # RLE
@@ -220,7 +220,7 @@ class Macroblock:
                 subsampledBlock[x*4:x*4+4, y*4:y*4+4] = vBlock
         vDCT = dct(subsampledBlock, False)
         # Quantisierung
-        if quantize:
+        if quantize and self.mquant is not None:
             vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
         # ...
         # RLE
@@ -239,7 +239,7 @@ class Macroblock:
                     # DeRLE
                     yBlock = ec.decode(yBlock)
                     # DeQuantisierung
-                    if dequantize:
+                    if dequantize and self.mquant is not None:
                         yBlock = quantization.dequantize(yBlock, quantization.intracoding, self.mquant)
                     yBlock = idct(yBlock, False)
                     self.uncompressed[x][y] = setY(self.uncompressed[x][y], yBlock)
@@ -257,7 +257,7 @@ class Macroblock:
                     # DeRLE
                     uBlock = ec.decode(uBlock)
                     # DeQuantization
-                    if dequantize:
+                    if dequantize and self.mquant is not None:
                         uBlock = quantization.dequantize(uBlock, quantization.intracoding, self.mquant)
                     # inverse dct
                     uBlock = idct(uBlock, False)
@@ -276,7 +276,7 @@ class Macroblock:
                     # DeRLE
                     vBlock = ec.decode(vBlock)
                     # DeQuantisierung
-                    if dequantize:
+                    if dequantize and self.mquant is not None:
                         vBlock = quantization.dequantize(vBlock, quantization.intracoding, self.mquant)
                     vBlock = idct(vBlock, False)
                     self.uncompressed[x][y] = setV(self.uncompressed[x][y], vBlock)
@@ -291,10 +291,10 @@ class Macroblock:
         # DeRLE
         subsampledBlock = ec.decode(subsampledBlock)
         # DeQuantisierung
-        subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
+        if dequantize and self.mquant is not None:
+            subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
-        if dequantize:
-            subsampledBlock = idct(subsampledBlock, False)
+        subsampledBlock = idct(subsampledBlock, False)
         # upsample previously subsampled block
         uBlock = self.upsample(subsampledBlock)
         for x, vblocks in enumerate(self.uncompressed):
@@ -311,7 +311,7 @@ class Macroblock:
         # DeRLE
         subsampledBlock = ec.decode(subsampledBlock)
         # DeQuantisierung
-        if dequantize:
+        if dequantize and self.mquant is not None:
             subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
         subsampledBlock = idct(subsampledBlock, False)
