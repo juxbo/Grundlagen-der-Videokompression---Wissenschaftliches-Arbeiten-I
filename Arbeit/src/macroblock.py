@@ -73,13 +73,15 @@ class Macroblock:
         :return: integer
         """
         size = 0
-        for y in self.compressedY:
-            for z in y:
-                for i in z:
-                    size += i.length()
-        for x in (self.compressedU, self.compressedV):
-            for i in x:
-                size += i.length()
+        
+        for j in (self.compressedU, self.compressedV, self.compressedY):
+            flatlist = np.array(j).flatten()
+            for b in flatlist:
+                if isinstance(b, list):
+                    for r in b:
+                        size += r.length()
+                else:
+                    size += b.length()
         return size
 
     def getUncompressed(self):
