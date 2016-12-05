@@ -1,14 +1,17 @@
 \begin{table}
 \centering
+\begin{tabular}{|ccc|l|l|}
+	\hline
+	\multicolumn{3}{|c|}{Genutzte Optionen}               & Größe in Kilobyte & Ratio \\
+	RLE & Chroma Subsampling & Quantisierung mit Faktor &                   &       \\
+	\hline
+	X   &                    & -                        & 258.38            & 3.76  \\
+	X   & X                  & -                        & 145.95            & 6.66  \\
+	X   & X                  & 1                        & 58.32             & 16.67 \\
+	X   & X                  & 16                       & 18.59             & 52.29 \\
+	X   & X                  & 31                       & 16.23             & 59.89 \\
+	\hline
+\end{tabular}
 \caption{Testergebnisse der angewandten Kompressionsalgorithmen}
 \label{tab:test}
-\begin{tabular}{cccll}
-\multicolumn{3}{l}{Genutzte Optionen}               & Größe in Kilobyte & Ratio \\
-RLE & Chroma Subsampling & Quantisierung mit Faktor &                   &       \\
-X   &                    & -                        & 258.38            & 3.76  \\
-X   & X                  & -                        & 145.95            & 6.66  \\
-X   & X                  & 1                        & 58.32             & 16.67 \\
-X   & X                  & 16                       & 18.59             & 52.29 \\
-X   & X                  & 31                       & 16.23             & 59.89 \\
-\end{tabular}
 \end{table}
