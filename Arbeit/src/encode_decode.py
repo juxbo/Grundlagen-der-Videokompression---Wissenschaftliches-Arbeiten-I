@@ -65,8 +65,13 @@ def encode(bild, subsample=True, quantize=True, mquant=1):
             compressedSize += macroblock.size()
             compressedMacroblocks[x][y] = macroblock
 
-    print("Original Size: ", bildInYUV.size)
-    print("Compressed Size: ", compressedSize)
+    # For calculation of original size we assumed, that each RGB
+    # value is represented as an 8 bit integer
+    # For calculation of the compressed size we assumed that each
+    # value encoded by RLE needs 9 bits as we have additional overhead
+    # from special characters like eob
+    print("Original Size: ", ((bildInYUV.size * 3 * 8) / 1024) / 8, " Kilobyte")
+    print("Compressed Size: ", ((compressedSize * 9) / 1024) / 8, " Kilobyte")
     return compressedMacroblocks
 
 

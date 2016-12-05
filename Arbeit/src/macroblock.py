@@ -143,7 +143,7 @@ class Macroblock:
             for y, block in enumerate(vblocks):
                 yBlock = getY(block.tolist())
                 # DCT
-                yDCT = dct(yBlock, False)
+                yDCT = dct(yBlock, True)
                 # Quantisierung
                 if quantize and self.mquant is not None:
                     yDCT = quantization.quantize(yDCT, quantization.intracoding, self.mquant)
@@ -163,7 +163,7 @@ class Macroblock:
                 uBlock = getU(block.tolist())
                 uBlock = self.subsample(uBlock)
                 subsampledBlock[x*4:x*4+4, y*4:y*4+4] = uBlock
-        uDCT = dct(subsampledBlock, False)
+        uDCT = dct(subsampledBlock, True)
         # Quantisierung
         if quantize and self.mquant is not None:
             uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
@@ -180,7 +180,7 @@ class Macroblock:
         for x, vblocks in enumerate(self.blocks):
             for y, block in enumerate(vblocks):
                 uBlock = getU(block.tolist())
-                uDCT = dct(uBlock, False)
+                uDCT = dct(uBlock, True)
                 # Quantisierung
                 if quantize and self.mquant is not None:
                     uDCT = quantization.quantize(uDCT, quantization.intracoding, self.mquant)
@@ -197,7 +197,7 @@ class Macroblock:
         for x, vblocks in enumerate(self.blocks):
             for y, block in enumerate(vblocks):
                 vBlock = getV(block.tolist())
-                vDCT = dct(vBlock, False)
+                vDCT = dct(vBlock, True)
                 # Quantisierung
                 if quantize and self.mquant is not None:
                     vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
@@ -218,7 +218,7 @@ class Macroblock:
                 vBlock = getV(block.tolist())
                 vBlock = self.subsample(vBlock)
                 subsampledBlock[x*4:x*4+4, y*4:y*4+4] = vBlock
-        vDCT = dct(subsampledBlock, False)
+        vDCT = dct(subsampledBlock, True)
         # Quantisierung
         if quantize and self.mquant is not None:
             vDCT = quantization.quantize(vDCT, quantization.intracoding, self.mquant)
@@ -241,7 +241,7 @@ class Macroblock:
                     # DeQuantisierung
                     if dequantize and self.mquant is not None:
                         yBlock = quantization.dequantize(yBlock, quantization.intracoding, self.mquant)
-                    yBlock = idct(yBlock, False)
+                    yBlock = idct(yBlock, True)
                     self.uncompressed[x][y] = setY(self.uncompressed[x][y], yBlock)
         else:
             raise Exception("No compressed data there")
@@ -260,7 +260,7 @@ class Macroblock:
                     if dequantize and self.mquant is not None:
                         uBlock = quantization.dequantize(uBlock, quantization.intracoding, self.mquant)
                     # inverse dct
-                    uBlock = idct(uBlock, False)
+                    uBlock = idct(uBlock, True)
                     self.uncompressed[x][y] = setU(self.uncompressed[x][y], uBlock)
         else:
             raise Exception("No compressed data there")
@@ -278,7 +278,7 @@ class Macroblock:
                     # DeQuantisierung
                     if dequantize and self.mquant is not None:
                         vBlock = quantization.dequantize(vBlock, quantization.intracoding, self.mquant)
-                    vBlock = idct(vBlock, False)
+                    vBlock = idct(vBlock, True)
                     self.uncompressed[x][y] = setV(self.uncompressed[x][y], vBlock)
         else:
             raise Exception("No compressed data there")
@@ -294,7 +294,7 @@ class Macroblock:
         if dequantize and self.mquant is not None:
             subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
-        subsampledBlock = idct(subsampledBlock, False)
+        subsampledBlock = idct(subsampledBlock, True)
         # upsample previously subsampled block
         uBlock = self.upsample(subsampledBlock)
         for x, vblocks in enumerate(self.uncompressed):
@@ -314,7 +314,7 @@ class Macroblock:
         if dequantize and self.mquant is not None:
             subsampledBlock = quantization.dequantize(subsampledBlock, quantization.intracoding, self.mquant)
         # Inverse DCT
-        subsampledBlock = idct(subsampledBlock, False)
+        subsampledBlock = idct(subsampledBlock, True)
         # upsample previously subsampled block
         vBlock = self.upsample(subsampledBlock)
         for x, vblocks in enumerate(self.uncompressed):
