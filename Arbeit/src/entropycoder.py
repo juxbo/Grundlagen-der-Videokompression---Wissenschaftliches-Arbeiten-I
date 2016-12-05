@@ -7,14 +7,21 @@ import collections
 
 
 class descriptor:
+    """ base descriptor class """
     def __init__(self):
         self.type = "descriptor"
+
     def length(self):
         raise NotImplementedError
+
 
 class ac(descriptor):
     """ Descriptor for AC values """
     def __init__(self, value, timesZero):
+        """
+        :param value: value to save in descriptor
+        :param timesZero: count of leading zeros
+        """
         self.type = "ac"
         self.value = value
         self.timesZero = timesZero
@@ -22,6 +29,8 @@ class ac(descriptor):
         self.addBits = None
 
     def length(self):
+        """ Get count of bits needed to represent
+        this descriptor """
         if self.code is None or self.addBits is None:
             sum = 0
             if self.timesZero > 0:
@@ -29,6 +38,7 @@ class ac(descriptor):
             return sum + 1
         else:
             return len(self.code) + len(self.addBits)
+
 
 class eob(descriptor):
     """ Descriptor that indicates End of block """
@@ -38,23 +48,37 @@ class eob(descriptor):
         self.value = "eob"
 
     def length(self):
+        """ Get count of bits needed to represent
+        this descriptor """
         if self.code is None:
             return 4
         else:
             return len(self.code)
 
+
 def encode(dct):
+    """ Apply RLE
+    :param dct: 8x8 array
+    :return: list of rle descriptors
+    """
     # RLE
     return RLEzigZag(dct)
 
+
 def decode(rle):
+    """ Reverse RLE
+    :param rle: list of rle descriptors
+    :return: 8x8 array of restored values
+    """
     # DeRLE
     result = deRLEzigZag(rle, 8)
     return result
 
+
 def RLEzigZag(dct):
     """ Zig Zag Run length encoding
-    :param dct: (quantized) DCT -> 8x8 array
+    :param dct: 8x8 array
+    :return: list of rle descriptors
     """
     moves = zigZag(len(dct))
     result = []
@@ -70,12 +94,15 @@ def RLEzigZag(dct):
     result.append(eob())
     return result
 
+
 def deRLEzigZag(rle, dim=8):
     """ Zig Zag Run length decoding
-    param rle: Output from RLEzigZag """
+    :param rle: list of rle descriptors
+    :return: 8x8 array of restored values
+    """
     moves = zigZag(dim)
     moveIndex = 0
-    result = np.zeros([dim,dim], np.float64)
+    result = np.zeros([dim, dim], np.float64)
     for value in rle:
         if value.type == "eob":
             break
@@ -92,15 +119,15 @@ def deRLEzigZag(rle, dim=8):
     return result
 
 
-
 def zigZag(dim):
     """ Calculate zig zag moves for a matrix of given dimension
     :param dim: dimension of the matrix
-    :return: list of tuples like (x, y) """
+    :return: list of tuples like (x, y)
+    """
 
     moves = []
     # Zig
-    for index in range(0,dim):
+    for index in range(0, dim):
         if (index % 2) != 0:
             x = 0
             y = index
@@ -109,7 +136,7 @@ def zigZag(dim):
             x = index
             y = 0
             even = True
-        for run in range(0,index + 1):
+        for run in range(0, index + 1):
             moves.append((x, y))
             if not even:
                 x += 1

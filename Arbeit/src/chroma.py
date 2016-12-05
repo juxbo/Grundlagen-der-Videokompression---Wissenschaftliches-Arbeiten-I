@@ -1,8 +1,21 @@
-from copy import copy, deepcopy
+"""
+Convert 2 dimensional arrays from RGB
+representation and vice versa. Also offers
+functionalities to replace Y,U or V values
+arrays
+"""
+
 from YUVBT601 import RGB2YUV, YUV2RGB
+from copy import copy, deepcopy
 import numpy as np
 
 def rgb_chroma(rgbArray):
+    """ Covert 2 dimensional array from RGB to its YUV
+    representation
+    :param rgbArray: 2 dimensional array of rgb values,
+                     represented as tuple of (R, G, B)
+    :return: 2 dimensional array of YUV tuples
+    """
     yuvArray = np.empty_like(rgbArray, np.float64)
     for x, line in enumerate(rgbArray):
         for y, rgb in enumerate(line):
@@ -10,6 +23,12 @@ def rgb_chroma(rgbArray):
     return yuvArray
 
 def chroma_rgb(yuvArray):
+    """ Covert 2 dimensional array from YUV to its RGB
+    representation
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :return: 2 dimensional array of RGB tuples
+    """
     rgbArray = np.empty_like(yuvArray, np.uint8)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -31,6 +50,12 @@ def chroma_rgb(yuvArray):
     return rgbArray
 
 def getY(yuvArray):
+    """ Get Y values from a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :return: 2 dimensional array of Y values
+    """
     yArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -39,6 +64,14 @@ def getY(yuvArray):
     return yArray
 
 def setY(yuvArray, yArray):
+    """ Set Y values in a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :param yArray: 2 dimensional array of Y values
+                   to replace with
+    :return: 2 dimensional array of YUV tuples
+    """
     yuvArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -51,6 +84,12 @@ def setY(yuvArray, yArray):
     return yuvArray
 
 def getU(yuvArray):
+    """ Get U values from a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :return: 2 dimensional array of U values
+    """
     uArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -59,6 +98,14 @@ def getU(yuvArray):
     return uArray
 
 def setU(yuvArray, uArray):
+    """ Set U values in a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :param yArray: 2 dimensional array of U values
+                   to replace with
+    :return: 2 dimensional array of YUV tuples
+    """
     yuvArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -72,6 +119,12 @@ def setU(yuvArray, uArray):
 
 
 def getV(yuvArray):
+    """ Get V values from a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :return: 2 dimensional array of V values
+    """
     vArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):
@@ -80,6 +133,14 @@ def getV(yuvArray):
     return vArray
 
 def setV(yuvArray, vArray):
+    """ Set V values in a 2 dimensional array of
+    YUV tuples
+    :param yuvArray: 2 dimensional array of rgb values,
+                     represented as tuple of (Y, U, V)
+    :param yArray: 2 dimensional array of V values
+                   to replace with
+    :return: 2 dimensional array of YUV tuples
+    """
     yuvArray = deepcopy(yuvArray)
     for x, line in enumerate(yuvArray):
         for y, yuv in enumerate(line):

@@ -12,6 +12,7 @@ intracoding = [[8, 16, 19, 22, 26, 27, 29, 34],
                [26, 27, 29, 34, 38, 46, 56, 69],
                [27, 29, 35, 38, 46, 56, 69, 83]]
 
+
 def quantize(dct, quantizer, MQuant=1):
     """ quantizes a given matrix with its given qantizer
     :param dct: DCT matrix to quantize
@@ -30,6 +31,7 @@ def quantize(dct, quantizer, MQuant=1):
                 result[x][y] = int( (8 * coefficient) / (MQuant * quantizer[x][y] ))
             # results should be clipped
     return result
+
 
 def dequantize(dct, quantizer, MQuant=1):
     """ dequantizes a given matrix with its given qantizer
