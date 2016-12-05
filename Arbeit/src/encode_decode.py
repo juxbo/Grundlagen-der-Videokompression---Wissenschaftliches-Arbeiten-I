@@ -1,11 +1,18 @@
-from picb import bild
 from chroma import rgb_chroma, chroma_rgb
-from macroblock import Macroblock
-import scipy.misc
-import numpy as np
 from examples import example1
+from macroblock import Macroblock
+import argparse
+from picb import bild
+import numpy as np
+import scipy.misc
+
 
 def create_img(image):
+    """ Convert 2 dimensional array of rgb tuples
+    into an array that is convertable to a picture
+    with scipy
+    :param image: 2 dimensional array of rgb tuples
+    """
     # declare picture size with RGB color
     width = len(image[0])
     height = len(image)
@@ -26,7 +33,13 @@ def create_img(image):
     return img
 
 
-def encode(bild, subsample=True):
+def encode(bild, subsample=True, quantize=True, mquant=1):
+    """ Encode an image
+    :param subsample: whether subsampling should be applied or not
+    :param quantize: whether quantization should be applied or not
+    :param mquant: set quantization scaling factor
+    :return: 2 dimensional array of macroblocks
+    """
     # Variable that holds the compressed size at the end
     compressedSize = 0
     # chroma conversion
@@ -48,7 +61,7 @@ def encode(bild, subsample=True):
             ymul = y*16
             thisMacroblock = bildInYUV[xmul:xmul+16, ymul:ymul+16]
             macroblock = Macroblock(thisMacroblock)
-            macroblock.compress(subsample, 1)
+            macroblock.compress(subsample, quantize, mquant)
             compressedSize += macroblock.size()
             compressedMacroblocks[x][y] = macroblock
 
@@ -57,13 +70,18 @@ def encode(bild, subsample=True):
     return compressedMacroblocks
 
 
-def decode(compressedMacroblocks, subsample=True):
+def decode(compressedMacroblocks, upsample=True, dequantize=True):
+    """ Decode an encoded image
+    :param upsample: whether uplsampling should be applied or not
+    :param upsample: whether dequantization should be applied or not
+    :return: 2 dimenional array of rgb tuples
+    """
     height = len(compressedMacroblocks) * 16
     width = len(compressedMacroblocks[0]) * 16
     uncompressedImage = np.empty([height, width, 3])
     for x, row in enumerate(compressedMacroblocks):
         for y, macroblock in enumerate(row):
-            macroblock.uncompress(subsample)
+            macroblock.uncompress(upsample, dequantize)
             xmul = x*16
             ymul = y*16
             uncompressedImage[xmul:xmul+16, ymul:ymul+16] = macroblock.getUncompressed()
@@ -73,6 +91,12 @@ def decode(compressedMacroblocks, subsample=True):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Compress images.')
+    parser.add_argument('-s', '--subsample', dest='subsample', action='store_true', help='Enable subsampling')
+    parser.add_argument('-q', '--quantize', dest='quantize', action='store_true', help='Enable Quantization')
+    parser.add_argument('-m', '--mquant', dest='mquant', type=int, default='1', help='Set quantization scaling factor. Default: 1')
+    args = parser.parse_args()
+
     # show original image
     bild = scipy.misc.imread('./test_img/brook.jpg')
     # bild = scipy.misc.imread('./test_img/lena_small.jpg')
@@ -80,7 +104,7 @@ if __name__ == "__main__":
     img = create_img(bild)
     scipy.misc.imshow(img)
     # do compression and decompression
-    compressed = encode(bild)
-    uncompressed = decode(compressed)
+    compressed = encode(bild, args.subsample, args.quantize, args.mquant)
+    uncompressed = decode(compressed, args.subsample, args.quantize)
     # show uncompressed image
     scipy.misc.imshow(create_img(uncompressed))
