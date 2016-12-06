@@ -44,7 +44,7 @@ Betrachtet man ein Video mit einer üblichen Framerate von 25, dann ist dadurch 
 
 Beim Komprimieren eines Videos wird zunächst ein Frame pro GOP mittels Irrelevanzreduktion komprimiert und dann als Referenz zwischengespeichert. Die folgenden Bilder werden, um die vom Encoder benötigte Arbeit einfach aufteilen zu können, in sogenannte Makroblöcke unterteilt. Diese Makroblöcke sind bei den meisten Standards auf eine feste Größe von 16x16 Pixel gesetzt. 
 
-\subsection{Motion Compensation}: 
+\subsection{Motion Compensation}
 
 Das in Makroblöcke aufgeteilte Bild wird vor der Durchführung der Irrelevanzreduktion mit der Referenz Block für Block verglichen um statische Bildinhalte zu erkennen. Ein Bildinhalt ist statisch, wenn sich ein Block von einem Bild zum nächsten nicht verändert hat. Alle statischen Bildinhalte werden dann entfernt, stattdessen wird auf den Inhalt der gespeicherten Referenz verwiesen. 
 Damit sind zwar statische Bildinhalte kein Problem, allerdings kann, zum Beispiel bei einem Schwenken der Kamera, der trotzdem in beiden Bildern identisch vorhandene Hintergrund nicht kodiert werden, da sich sein Block in der Referenz zum Block des folgenden Bildes unterscheidet. Um diese immer noch redundanten Bildinformationen ebenfalls entfernen zu können, bedarf es einer komplexeren Vorgehensweise, der Motion Compensation.
