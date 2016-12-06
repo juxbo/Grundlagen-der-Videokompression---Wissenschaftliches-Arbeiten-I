@@ -10,39 +10,48 @@ Die Redundanzreduktion ist cool und sie reduziert Redundanz.
 Alle bis jetzt vorgestellten Ansätze der Videokompression beschäftigen sich mit der Kompression von Einzelbildern innerhalb eines Videos. Bei der Motion Compensation hingegen wird das Kompressionspotential ausgenutzt, dass innerhalb der Abhängigkeiten der Einzelbilder in einem Video steckt.
 Videos bestehen meist aus zusammenhängenden Szenen mit größtenteils unverändertem Inhalt innerhalb einer jeweils solchen Szene.
 
-Man stelle sich zum Beispiel die folgende Szene vor: Eine statische Kamera filmt einen Mensch, unseren Protagonisten, der eine Straße entlang läuft und schließlich eine Bar betritt, eine typische Szene in Serien heutzutage.
+Man stelle sich zum Beispiel die folgende Szene vor: Eine Kamera filmt einen Mensch, unseren Protagonisten, der eine Straße entlang läuft und schließlich eine Bar betritt, eine typische Szene in Serien heutzutage.
 
-Teilt man diese Szene in ihre Einzelbilder auf, stellt man schnell fest, dass die Einzige Bewegung der laufende Protagonist ist und der Hintergrund dabei komplett statisch verbleibt.
-Motion Compensation nutzt die Redundanz dieser statischen Hintergründe aus indem es diese jeweils nur ein Mal speichert und in den folgenden Bildern darauf referenziert um ein für den Zuschauer unverändertes Bild anzuzeigen.
-Da Videos üblicherweise zu großen Teilen mit statischen Bildteilen übersäht sind, macht die von Motion Compensation erzielbare Kompression einen großen Teil des gesamt möglichen Kompressionpotentials innerhalb von Videos aus.
+Teilt man diese Szene in ihre Einzelbilder (Frames) auf, stellt man schnell fest, dass die Einzige Bewegung vom laufenden Protagonisten ausgeht und große Teile des Hintergrunds dabei in mehreren Bildern wiederholt werden.
+Motion Compensation nutzt die Redundanz dieser redundanten Hintergründe aus, indem es diese jeweils nur ein Mal speichert und in den folgenden Bildern darauf referenziert um ein für den Zuschauer unverändertes Bild anzuzeigen.
+Da Videos üblicherweise zum Großteil mit redundanten Bildteilen in einzelnen Szenen gefüllt sind, macht die von Motion Compensation erzielbare Kompression einen großen Teil des gesamt möglichen Kompressionpotentials innerhalb von Videos aus.
 
-Damit Motion Compensation überhaupt funktionieren kann ist eine Aufteilung und Auswertung aller Video Einzelbilder (Frames) nötig.
+Damit Motion Compensation überhaupt funktionieren kann ist eine Aufteilung und Auswertung aller Video Einzelbilder in verschiedene Frames nötig.
 \subsection{Frames}
 Mit dem Kodieren teilt man alle Frames in eine bestimmte Bildart ein:
-Es gibt rein intracodierte Frames, die sogenannten intracoded Frames (kurz I-Frames), bei denen es sich um einzelne Vollbilder, die Allein stehen und somit von keinem anderen Bild des Videos abhängen. Bei ihnen handelt es sich im Endeffekt einfach um ein für sich stehendes JPEG, was mit den üblichen Methoden der Bildkompression verkleinert wurde.
-Außerdem gibt es intercodierte Frames, die nur einen vorhergesagte Differenz des Inhalt in Abhängigkeit zu einem vorherigen I-Frame haben, die sogenannten predictive Frames (kurz P-Frames).
-Als letztes gibt es bipredictive Frames (kurz B-Frames), die sehr ähnlich zu P-Frames, die in zwei Richtungen intercodiert sind, nämlich indem sie die vorhergesagte Differenz des Inhaltes zum vorherigen I- oder P-Frame speichern.
-Um die Vorhersagung zu erreichen zu können wird eine Reihenfolge der Codierung gewählt, die ungleich der Reihenfolge der Anzeigereihenfolge ist, wie auf der Abbildung X erkennbar ist. Dadurch wird der sowieso schon komplexe Prozess zusätzlich erschwert.
+Es gibt rein intracodierte Frames, die sogenannten intracoded Frames (kurz I-Frames), bei ihnen handelt es sich um einzelne Vollbilder, die von keinem anderen Bild des Videos abhängen. I-Frames sind also für sich stehende JPEG Bilder, welche mit den üblichen Methoden der Bildkompression verkleinert wurde.
+Außerdem gibt es intercodierte Frames, die nur eine vorhergesagte Differenz des Inhaltes in Abhängigkeit zu einem vorherigen I-Frame haben, die sogenannten predictive Frames (kurz P-Frames).
+Als letztes gibt es bipredictive Frames (kurz B-Frames), die sehr ähnlich zu P-Frames sind, jedoch in zwei Richtungen intercodiert wurden. Sie speichern nur die vorhergesagte Differenz des Inhaltes zum vorherigen I- oder P-Frame.
+Um die Vorhersagung zu erreichen zu können wird eine Reihenfolge der Codierung gewählt, die ungleich der Anzeigereihenfolge ist, wie auf der \textcolor{red}{Abbildung X} erkennbar ist. Dadurch wird der sowieso schon komplexe Prozess zusätzlich erschwert.
 
 Ein kompletter Szenenwechsel, also das Ändern des kompletten Bildes, ohne statische Zusammenhänge, muss dem Encoder immer mitgeteilt werden. Dieser muss dann einen neuen I-Frame codieren, auf dem die folgenden P- und B-Frames basieren. Dadurch wird die potentielle Gefahr einer starken Artefaktbildung vorgebeugt.
 
-Wenn man diese Aufteilung jedoch jeweils nur einmal pro Szene anwenden würde, würden mehrere Probleme bei wahllosem Zugriff entstehen. Wenn der I-Frame einer Szene fehlt oder übersprungen wird, würden die Änderungen, die in den folgenden P- und B-Frames festgehalten wurden, auf den falschen I-Frame angewendet, sodass im Video starke Artefakte entstehen. Beim Ausfall eines P-Frames einer Szene würde grundsätzlich das Gleiche gleiche passieren, jedoch nur bei den noch folgenden P-Frames der Szene.
+Wenn man diese Aufteilung jedoch jeweils nur einmal pro Szene anwenden würde, würden mehrere Probleme bei wahllosem Zugriff entstehen. Wenn der I-Frame einer Szene fehlt oder übersprungen wird, würden die Änderungen, die in den folgenden P- und B-Frames festgehalten wurden, auf den falschen I-Frame angewendet, sodass im Video starke Artefakte entstehen, wie man in \textcolor{red}{Abbildung X im Anhang} erkennt. Beim Ausfall eines P-Frames einer Szene würde grundsätzlich das Gleiche gleiche passieren, jedoch nur bei den noch folgenden P-Frames der Szene.
 
-Um diese unschönen Artefakte beim Vor- und Zurückspulen zu verhindern, dürfte nur zu einem I-Frame gesprungen werden, welches bei einer Aufteilung pro Szene jeweils der Anfang einer neuen Szene wäre.
+Um diese unschönen Artefakte beim Vor- und Zurückspulen zu verhindern, dürfte nur zu einem I-Frame gesprungen werden, welches bei einer Aufteilung pro Szene jeweils nur der Anfang einer neuen Szene wäre.
 
-Da bei einem Großteil der Anwendungsfälle von Videos jedoch eine fast vollständig wahlfreier Zugriff gewünscht ist, teilt man sie in viele kleine aufeinanderfallende Bildergruppen (Group of pictures, kurz GOP) auf. Eine GOP wird meist mit 2 Parametern angegeben, zum Beispiel N und M.
+Da bei einem Großteil der Anwendungsfälle von Videos jedoch eine fast vollständig wahlfreier Zugriff gewünscht ist, teilt man sie in viele kleine aufeinanderfolgende Bildergruppen (Group of pictures, kurz GOP) auf. Eine GOP wird meist mit 2 Parametern angegeben, in unserem Beispiel N und M.
 Dabei ist N eine bestimmte Anzahl von Frames aus denen die GOP besteht, also die Distanz von einem I-Frame zum nächsten I-Frame.
 M gibt die Distanz von einem I- oder P-Frame, bis zum jeweils Nächsten an, somit ist M-1 die Anzahl von B-Frames, die nach einem I- oder P-Frame folgen. Eine Bildergruppe fängt immer mit einem I-Frame an und wiederholt sich bis zum Ende eines Videos mit einem konstanten Schema.
 
-Mit den Parametern N=12 und M=4, würde die GOP dann aussehen wie auf der Abbildung X. (IBBBPBBBPBBB I...) TODO: ABBILDUNG 
+Mit den Parametern N=12 und M=4, würde die GOP dann aussehen wie auf der \textcolor{red}{Abbildung X}. (IBBBPBBBPBBB I...) TODO: ABBILDUNG 
 
 Bei MPEG ist eine Aufteilung mit den Parametern M=3 bis 4 und N= 11 bis 15 üblich.
 
-Betrachtet man eine übliche Framerate von 25 ist somit wahlfreier Zugriff bis auf die Hälfte einer Sekunde gegeben. Außerdem wird dadurch bei leichten Übertragungsfehlern einer Videodatei der Schaden minimiert, sodass das vom Endnutzer gesehene Bild nur maximal eine halbe Sekunde Artefakte anzeigt.
+Betrachtet man ein Video mit einer üblichen Framerate von 25, dann ist dadurch wahlfreier Zugriff mit einer Genauigkeit von bis auf die Hälfte einer Sekunde gegeben. Außerdem wird dadurch bei leichten Übertragungsfehlern einer Videodatei der Schaden minimiert, sodass das vom Endnutzer gesehene Bild nur maximal eine halbe Sekunde Artefakte anzeigt.
 
 \subsection{Makroblocks}
-TODO:
-Jeder Intercodierte Frame wird in sogenannte Makroblöcke unterteilt. Diese Makroblöcke werden beim Codieren zum Vergleichen mit dem vorher codierten Bild mittels Block matching algorithmus benutzt.
-\subsection{Motion Estimation and Compensation}: 
-TODO:
-Wenn ein ähnlicher Block gefunden wird, wird der Block mittels dem resultierenden Motion Vektor encodiert.
+
+Beim Komprimieren eines Videos wird zunächst ein Frame pro GOP mittels Irrelevanzreduktion komprimiert und dann als Referenz zwischengespeichert. Die folgenden Bilder werden, um die vom Encoder benötigte Arbeit einfach aufteilen zu können, in sogenannte Makroblöcke unterteilt. Diese Makroblöcke sind bei den meisten Standards auf eine feste Größe von 16x16 Pixel gesetzt. 
+
+\subsection{Motion Compensation}
+
+Das in Makroblöcke aufgeteilte Bild wird vor der Durchführung der Irrelevanzreduktion mit der Referenz Block für Block verglichen um statische Bildinhalte zu erkennen. Ein Bildinhalt ist statisch, wenn sich ein Block von einem Bild zum nächsten nicht verändert hat. Alle statischen Bildinhalte werden dann entfernt, stattdessen wird auf den Inhalt der gespeicherten Referenz verwiesen. 
+Damit sind zwar statische Bildinhalte kein Problem, allerdings kann, zum Beispiel bei einem Schwenken der Kamera, der trotzdem in beiden Bildern identisch vorhandene Hintergrund nicht kodiert werden, da sich sein Block in der Referenz zum Block des folgenden Bildes unterscheidet. Um diese immer noch redundanten Bildinformationen ebenfalls entfernen zu können, bedarf es einer komplexeren Vorgehensweise, der Motion Compensation.
+Die Motion Compensation sucht jene Blöcke in unserem neuem Frame mittels einem Block Matching Algorithmus heraus. Gefundene Blöcke werden mit einem Vektor, der von der Position des neuen Blocks, auf die Position des Ursprungsblocks aus der Referenz zeigt, kodiert. Beim Dekodieren kann dann mittels dieser Vektoren auf die Position des alten Blocks referenziert werden, sodass nur dieser Vektor gespeichert werden muss.
+
+\textcolor{red}{TODO Abbildung undso wie bei Wikipedia EN, maybe eher bei Block matching}
+
+\subsection{Block Matching}
+
+TODO: Block matching mathematik erklären?
