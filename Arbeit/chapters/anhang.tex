@@ -1,4 +1,3 @@
-%\begin{appendices}
 \appendix
 \chapter{Weitere Abbildungen und Tabellen}
 \label{appendix:abb_tab}
@@ -11,16 +10,12 @@
     \label{fig:chroma_artefacts}
 \end{figure}
 
-\vfill
-\lstinputlisting[language=Python, caption=Implementierung des Quantisierungsprozesses nach MPEG-1 Standard ohne Clipping, label=lst:quantizer]{snippets/quantizer.py}
-\vfill
-
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.5]{images/2-3_brook_orig.png}
-    \includegraphics[scale=0.5]{images/2-3_brook_1.png}
-    \includegraphics[scale=0.5]{images/2-3_brook_16.png}
-    \includegraphics[scale=0.5]{images/2-3_brook_31.png}
+    \includegraphics[scale=0.58]{images/2-3_brook_orig.png}
+    \includegraphics[scale=0.58]{images/2-3_brook_1.png}
+    \includegraphics[scale=0.58]{images/2-3_brook_16.png}
+    \includegraphics[scale=0.58]{images/2-3_brook_31.png}
     \caption{Ergebnis der Quantisierung mit verschiedenen Quantisierungsfaktoren}
     \textit{Oben links: Original, Oben rechts: Quantisiert mit Faktor 1, Unten links: Quantisiert mit Faktor 16, Unten rechts: Quantisiert mit Faktor 31.\\
     Mit zunehmendem Quantisierungsfaktor ist ein ansteigender Verlust der Bildqualität zu beobachten, wobei grobe Strukturen weitestgehend erhalten bleiben. Original nach \cite{brooke_cagle__2016}}
@@ -29,4 +24,8 @@
 
 \input{snippets/default_quantization_matrix.tex}
 \input{snippets/testing.tex}
-%\end{appendices}
+\chapter{Listings}
+
+\lstinputlisting[language=Python, caption=Implementierung der DCT für ein 8x8 Array, label=lst:impl_dct]{snippets/dct.py}
+\newpage
+\lstinputlisting[language=Python, caption=Implementierung des Quantisierungsprozesses nach MPEG-1 Standard ohne Clipping, label=lst:quantizer]{snippets/quantizer.py}
