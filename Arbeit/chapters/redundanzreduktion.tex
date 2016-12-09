@@ -1,13 +1,13 @@
 \chapter{Redundanzreduktion}
 \label{kap:Redundanzreduktion}
 
-Die Redundanzreduktion ist cool und sie reduziert Redundanz.
+Die Redundanzreduktion ist ein wesentlicher Bestandteil der Videokompression. Sie wird benutzt um sowohl Redundanzen in der Codierung, mittels Entropiecodierung, als auch temporale Redundanzen, mittels Motion Compensation, so gut wie möglich zu entfernen. Die daraus resultierende Reduzierung der Videodaten hat, in der Regel, keinen Einfluss auf die Qualität des vom Nutzer erkennbaren Bildes.
 
 \section{Entropiecodierung}
 
 Die Entropiecodierung ist eine verlustfreie Methode zur Kompression von Daten im Generellen. Sie findet also nicht exklusiv Anwendung in der Videokompression, bildet für sie jedoch trotzdem eine wichtige Grundlage.
 
-Ein Video kann von uns als Nachricht, d.h. als Folge von Zeichen betrachtet werden. Jedes Zeichen an der Stelle i, hat dabei einen Informationsgehalt h, der sich aus seiner Eintrittswahrscheinlichkeit wie folgt berechnet:
+Ein Video kann als Nachricht, d.h. als Folge von Zeichen betrachtet werden. Jedes Zeichen an der Stelle i, hat dabei einen Informationsgehalt h, der sich aus seiner Eintrittswahrscheinlichkeit wie folgt berechnet:
 \begin{align*}
 h(i) = log(\frac{1}{p(i)})
 \end{align*}
@@ -25,9 +25,9 @@ L = \sum_{i=1}^E p(i) * l(i)
 \end{align*}
 
 
-Das Shannon'sche Codierungstheorem besagt, dass, bei effizientes möglicher Kodierung mit eindeutiger Dekodierung, die mittlere Wortlänge eines Codes immer mindestens der Entropie einer Nachricht entsprechen muss. Dies bildet unser theoretisches Limit, dem wir uns so nah wie möglich annähern wollen.
+Das Shannon'sche Codierungstheorem besagt, dass, bei effizientes möglicher Kodierung mit eindeutiger Dekodierung, die mittlere Wortlänge eines Codes immer mindestens der Entropie einer Nachricht entsprechen muss. Dies bildet ein theoretisches Limit, dem sich so nah wie möglich angenähert werden soll.
 
-Die Redundanz des Codes berechnet sich aus der Differenz von Entropie und mittlerer Wortlänge. Das Ziel für die Kompression eines Videos ist es, so wenig Code-Redundanz wie möglich zu erreichen, was wir nur durch Codes mit variabler Wortlänge erreichen können.
+Die Redundanz des Codes berechnet sich aus der Differenz von Entropie und mittlerer Wortlänge. Das Ziel für die Kompression eines Videos ist es, so wenig Code-Redundanz wie möglich zu erreichen, was nur durch Codes mit variabler Wortlänge zu erreichen ist.
 
 
 \section{Motion Compensation}
@@ -56,7 +56,7 @@ Wenn man diese Aufteilung jedoch jeweils nur einmal pro Szene anwenden würde, w
 
 Um diese unschönen Artefakte beim Vor- und Zurückspulen zu verhindern, dürfte nur zu einem I-Frame gesprungen werden, welches bei einer Aufteilung pro Szene jeweils nur der Anfang einer neuen Szene wäre.
 
-Da bei einem Großteil der Anwendungsfälle von Videos jedoch ein fast vollständig wahlfreier Zugriff gewünscht ist, teilt man jede Videosequenz in mehrere kleine aufeinanderfolgende Bildergruppen (Group of pictures, kurz GOP) auf. Eine GOP wird meist mit 2 Parametern angegeben, in diesem Beispiel nennen wir diese einmal N und M.\textcolor{blue}{Zitat wiederfinden}
+Da bei einem Großteil der Anwendungsfälle von Videos jedoch ein fast vollständig wahlfreier Zugriff gewünscht ist, teilt man jede Videosequenz in mehrere kleine aufeinanderfolgende Bildergruppen (Group of pictures, kurz GOP) auf. Eine GOP wird meist mit 2 Parametern angegeben, in diesem Beispiel N und M.\textcolor{blue}{Zitat wiederfinden}
 Dabei ist N eine bestimmte Anzahl von Frames aus denen die GOP besteht, also die Distanz von einem I-Frame zum nächsten I-Frame.
 M gibt die Distanz von einem I- oder P-Frame, bis zum jeweils Nächsten an, somit ist M-1 die Anzahl von B-Frames, die nach einem I- oder P-Frame folgen. Eine Bildergruppe fängt immer mit einem I-Frame an und wiederholt sich bis zum Ende eines Videos mit einem konstanten Schema.
 
