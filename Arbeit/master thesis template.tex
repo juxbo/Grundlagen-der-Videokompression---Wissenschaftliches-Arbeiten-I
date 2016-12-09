@@ -26,6 +26,12 @@
 \usepackage[pdftex,bookmarks=true]{hyperref} % -> automatische ``bookmarks''
 \parindent 0pt % keine einr�ckung nach abs�tzen
 
+\usepackage{scrpage2}
+\ifoot[]{}
+\cfoot[\pagemark]{\pagemark}
+\ofoot[]{}
+% \ofoot[\pagemark]{\pagemark}
+\pagestyle{scrplain}
 % vspace, der vor beginn und nach Ende eines Chapters eingügt wird
 \renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1cm}}
@@ -75,7 +81,8 @@
 	\include{chapters/redundanzreduktion}
 	\include{chapters/ausblick}
 	\include{chapters/zusammenfassung}
-	\setcounter{page}{15} % seitenzahl counter auf 15 setzen
+	\setcounter{page}{6} % seitenzahl counter auf 15 setzen
+	\renewcommand{\thepage}{\roman{page}}% Roman numerals for page counter
 % 	\include{glossar}
 	\include{chapters/anhang}
 	\backmatter % keine kapitelnummern, r�mische seitenzahlen
