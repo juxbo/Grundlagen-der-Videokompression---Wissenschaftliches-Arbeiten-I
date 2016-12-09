@@ -1,13 +1,13 @@
 \chapter{Redundanzreduktion}
 \label{kap:Redundanzreduktion}
 
-Die Redundanzreduktion ist cool und sie reduziert Redundanz.
+Die Redundanzreduktion ist ein wesentlicher Bestandteil der Videokompression. Sie wird benutzt um sowohl Redundanzen in der Codierung, mittels Entropiecodierung, als auch temporale Redundanzen, mittels Motion Compensation, so gut wie möglich zu entfernen. Die daraus resultierende Reduzierung der Videodaten hat, in der Regel, keinen Einfluss auf die Qualität des vom Nutzer erkennbaren Bildes.
 
 \section{Entropiecodierung}
 
 Die Entropiecodierung ist eine verlustfreie Methode zur Kompression von Daten im Generellen. Sie findet also nicht exklusiv Anwendung in der Videokompression, bildet für sie jedoch trotzdem eine wichtige Grundlage.
 
-Ein Video kann von uns als Nachricht, d.h. als Folge von Zeichen betrachtet werden. Jedes Zeichen an der Stelle i, hat dabei einen Informationsgehalt h, der sich aus seiner Eintrittswahrscheinlichkeit wie folgt berechnet:
+Ein Video kann als Nachricht, d.h. als Folge von Zeichen betrachtet werden. Jedes Zeichen an der Stelle i, hat dabei einen Informationsgehalt h, der sich aus seiner Eintrittswahrscheinlichkeit wie folgt berechnet:
 \begin{align*}
 h(i) = log(\frac{1}{p(i)})
 \end{align*}
@@ -25,7 +25,7 @@ L = \sum_{i=1}^E p(i) * l(i)
 \end{align*}
 
 
-Das Shannon'sche Codierungstheorem besagt, dass, bei effizientes möglicher Kodierung mit eindeutiger Dekodierung, die mittlere Wortlänge eines Codes immer mindestens der Entropie einer Nachricht entsprechen muss. Dies bildet unser theoretisches Limit, dem wir uns so nah wie möglich annähern wollen.
+Das Shannon'sche Codierungstheorem besagt, dass, bei effizientes möglicher Kodierung mit eindeutiger Dekodierung, die mittlere Wortlänge eines Codes immer mindestens der Entropie einer Nachricht entsprechen muss. Dies bildet unser theoretisches Limit, dem  uns so nah wie möglich annähern wollen.
 
 Die Redundanz des Codes berechnet sich aus der Differenz von Entropie und mittlerer Wortlänge. Das Ziel für die Kompression eines Videos ist es, so wenig Code-Redundanz wie möglich zu erreichen, was wir nur durch Codes mit variabler Wortlänge erreichen können.
 
