@@ -28,8 +28,6 @@ def create_img(image):
             img[y][x][0] = r
             img[y][x][1] = g
             img[y][x][2] = b
-    # don't know why but now we need to correct wrong array
-    img = np.rot90(np.fliplr(img))
     return img
 
 
@@ -102,11 +100,14 @@ if __name__ == "__main__":
     parser.add_argument('-m', '--mquant', dest='mquant', type=int, default='1', help='Set quantization scaling factor. Default: 1')
     args = parser.parse_args()
 
-    # show original image
+    # Reference Image
     bild = scipy.misc.imread('./test_img/brook.jpg')
-    # bild = scipy.misc.imread('./test_img/lena_small.jpg')
+    # Image showing chroma subsampling artefacts
     # bild = example1()
+    # Mirror and rotate image
+    bild = np.rot90(np.fliplr(bild))
     img = create_img(bild)
+    # show original image
     scipy.misc.imshow(img)
     # do compression and decompression
     compressed = encode(bild, args.subsample, args.quantize, args.mquant)

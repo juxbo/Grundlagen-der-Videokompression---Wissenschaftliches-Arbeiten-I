@@ -1,5 +1,5 @@
 """
-Convert 2 dimensional arrays from RGB
+Convert 2 dimensional arrays from RGB to YUV
 representation and vice versa. Also offers
 functionalities to replace Y,U or V values
 arrays

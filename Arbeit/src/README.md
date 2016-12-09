@@ -1,4 +1,4 @@
-Dieses in Python3 geschriebene Programm implementiert Bildkompressionsverfahren, welche in der Seminararbeit vorgestellt wurden.
+Dieses in Python3 geschriebene Programm implementiert Bildkompressionsverfahren, welche in der Seminararbeit vorgestellt werden.
 
 # Installation
 
