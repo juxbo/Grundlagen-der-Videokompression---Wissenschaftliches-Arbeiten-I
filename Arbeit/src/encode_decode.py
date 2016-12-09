@@ -2,7 +2,6 @@ from chroma import rgb_chroma, chroma_rgb
 from examples import example1
 from macroblock import Macroblock
 import argparse
-from picb import bild
 import numpy as np
 import scipy.misc
 
