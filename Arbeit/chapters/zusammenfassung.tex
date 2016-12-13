@@ -1,3 +1,8 @@
 \chapter{Zusammenfassung}
 \label{kap:Zusammenfassung}
-ÄÖÜäöüß
+
+In dieser Arbeit wurden die grundlegenden Methoden der Videokompression vorgestellt. Mittels der Irrelevanzreduktion lassen sich weniger relevante Informationen in einzelnen Bildern gezielt reduzieren. Hierfür werden Farbwerte mittels Chroma Subsampling ungenauer gespeichert als Helligkeitswerte. Durch Anwendung der DCT werden anschließend die Ortsfreuqenzen extrahiert und mit Hilfe der Quantisierung um die höheren Frequenzbereiche reduziert. Diese Verfahren resultieren in einer Darstellung, welche sich mittels der Entropiecodierung sehr gut komprimieren lässt. Unter Anwendung einer speziellen Form der Lauflängen- und Huffmancodierung wird die Menge der Daten möglichst nah an das theoretische Limit der enthaltenen Entropie herangeführt. MOTION COMPENSATION INSERT
+
+In einer eigenen Implementierung der Methoden der Irrelevanzreduktion unter Zuhilfenahme der Lauflängencodierung konnten Kompressionsraten von 1:5 bei guter Bildqualität und eine Ratio von 1:20 bei verminderter Bildqualität erreicht werden. Hierdurch wurde deutlich wie groß der Nutzen von Videokompression in Bezug auf die Speichergröße einer Datei sein kann.
+
+** Auf Artefakte eingehen?
