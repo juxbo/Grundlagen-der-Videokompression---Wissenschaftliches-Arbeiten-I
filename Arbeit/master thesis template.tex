@@ -33,7 +33,7 @@
 % \ofoot[\pagemark]{\pagemark}
 \pagestyle{scrplain}
 % vspace, der vor beginn und nach Ende eines Chapters eingügt wird
-\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{1cm}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1cm}}
 
 % Only show chapters and section in table of contents
@@ -82,8 +82,13 @@
 	\mainmatter
 	\include{chapters/einleitung}
 	\include{chapters/irrelevanzredukton}
+	% Disable newpage for chapters to get end of R into the site if Z
+	\begingroup
+	\renewcommand{\cleardoublepage}{}
+	\renewcommand{\clearpage}{}
 	\include{chapters/redundanzreduktion}
 	\include{chapters/zusammenfassung}
+	\endgroup
 	\setcounter{page}{6} % seitenzahl counter auf 15 setzen
 	\renewcommand{\thepage}{\roman{page}}% Roman numerals for page counter
 	\include{chapters/anhang}

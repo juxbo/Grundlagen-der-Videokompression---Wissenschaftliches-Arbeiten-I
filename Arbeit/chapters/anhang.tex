@@ -24,6 +24,29 @@
 
 \input{snippets/default_quantization_matrix.tex}
 \input{snippets/testing.tex}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.566]{images/corruptedGif/frame7.png}
+    \includegraphics[scale=0.566]{images/corruptedGif/frame10.png}
+    \includegraphics[scale=0.566]{images/corruptedGif/frame13.png}
+    \includegraphics[scale=0.566]{images/corruptedGif/frame16.png}
+    \includegraphics[scale=0.566]{images/corruptedGif/frame19.png}
+    \includegraphics[scale=0.566]{images/corruptedGif/frame22.png}
+    \caption{Bildartefakte beim Auslassen eines I-Frames}
+    \textit{Es wird jeder dritte Frame eines GIFs gezeigt, welches einen Szenenwechsel von einem Turner hinzu zu zwei springendem Delfinen darstellt. Hierbei wurde im Ursprungsvideo mit Absicht der beim Szenenwechsel erzeugte I-Frame zerstört um künstlich Bildartefakte zu erzwingen und sogenannte „Glitch-Art” zu erzeugen.}
+    \linebreak
+    Original nach \cite{supergif}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=3]{images/3-2-3_motionCompensation.jpg}
+    \caption{Suchen von identischen Blöcken in zwei Frames mittels Bewegungskorrektur}
+    \textit{Das Referenz Bild wird anschließend mit dem resultierenden Motion Vektor codiert}
+    Quelle: \cite{lopes_memory_2012}
+\end{figure}
+
 \chapter{Listings}
 
 \lstinputlisting[language=Python, caption=Implementierung der DCT für ein 8x8 Array, label=lst:impl_dct]{snippets/dct.py}
