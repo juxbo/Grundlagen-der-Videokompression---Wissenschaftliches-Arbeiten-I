@@ -13,6 +13,8 @@
 % 		* Weiterverarbeitung via Quantisierung
 % 		* Wobei allerdings nicht direkt weniger Speicherplatz verbraucht wird, sondern vielmehr die Daten besser komprimierbar für RLE gemacht werden, welches im nächsten Kapitel behandelt wird.
 
+Videos bestehen im Wesentlichen aus einer Aneinanderreihung von einzelnen Bildern. Dieses Kapitel untersucht, wie die in diesen Einzelbildern enthaltenen Daten möglicherweise reduziert werden können.
+
 Die rohe Aufnahme eines Bildes bietet eine Fülle an Informationen. Mit Blick auf die Eigenschaften des menschlichen Sehsinns lässt sich hierbei allerdings feststellen, dass einige Informationen relevanter für das Erkennen eines Bildes sind, als andere. Die Irrelevanzreduktion beschäftigt sich mit der Trennung und Reduzierung von weniger wichtigen Informationen und bietet damit Methoden zur verlustbehafteten Datenkompression an.
 
 Bei der Videokompression werden im wesentlichen zwei Eigenschaften zur Reduktion von Daten ausgenutzt. Zum einen nimmt das Auge Varianzen in der Helligkeit (Luminanz) stärker wahr, als Änderungen im Farbton (Chrominanz). Zum Anderen ist das Auge besser in der Lage niedrige Ortsfrequenzen zu erkennen, als hohe - erkennt also grobe Strukturen eher als feinere. Diese Eigenschaften können nun ausgenutzt werden, um einen guten Kompromiss aus akzeptabler Bildqualität und guter Datenreduktion zu finden \cite{akramullah_digital_2014}.

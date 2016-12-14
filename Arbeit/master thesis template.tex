@@ -33,7 +33,7 @@
 % \ofoot[\pagemark]{\pagemark}
 \pagestyle{scrplain}
 % vspace, der vor beginn und nach Ende eines Chapters eingügt wird
-\renewcommand*{\chapterheadstartvskip}{\vspace*{1cm}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1cm}}
 
 % Only show chapters and section in table of contents
@@ -87,6 +87,7 @@
 	\renewcommand{\cleardoublepage}{}
 	\renewcommand{\clearpage}{}
 	\include{chapters/redundanzreduktion}
+	\renewcommand*{\chapterheadstartvskip}{\vspace*{1cm}}
 	\include{chapters/zusammenfassung}
 	\endgroup
 	\setcounter{page}{6} % seitenzahl counter auf 15 setzen
