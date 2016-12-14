@@ -23,7 +23,7 @@ Bei dem Videokompressionsstandard MPEG, wird die Entropiecodierung mittels einer
 % Ein Blockende beinhaltet implizit die Anzahl der 0en. No need for redundancy.
 Da durch die Quantisierung lange Nullfolgen entstehen, ist eine kombinierte Anwendung empfehlenswert.
 % Was für eine kombinierte Anwendung? Huffman-Codierung wird doch erst weiter unten erklärt?!
-In einer eigenen Implementierung konnte hierdurch bereits eine Kompressionsrate von ca. 1:5 bei hoher Bildqualität erreicht werden. Bei niedrigerer Bildqualität und damit vermehrtem Auftreten von Nullen steig die Kompressionsrate auf 1:20 an (siehe Tabelle \ref{tab:test} und Anhang \ref{chap:testvorgenen}).
+In einer eigenen Implementierung konnte, unter Verwendung des in Abbildung \ref{fig:quantization_multi_mquants} dargestellten Originalbildes, hierdurch bereits eine Kompressionsrate von ca. 1:5 bei hoher Bildqualität erreicht werden. Bei niedrigerer Bildqualität und damit vermehrtem Auftreten von Nullen steig die Kompressionsrate auf 1:20 an (siehe Tabelle \ref{tab:test} und Anhang \ref{chap:testvorgenen}).
 Im Anschluss werden im resultierenden Bitstrom, im Zuge der Huffman-Codierung, mehrfach vorkommende Zahlenfolgen basierend auf ihrer Auftrittswahrscheinlichkeit mit kürzeren Codes ersetzt.
 Durch das Zusammenspiel von Irrelevanzreduktion mit Quantisierung, Lauflängen-, sowie Huffman-Codierung ist eine effektive Kompression des gesamten Bitstroms um \textcolor{blue}{1:10}, ohne eine merkbare Verminderung der Bildqualität möglich.
 % Gibt es da eine Quelle? Die Kompressionsleistung sollte nach meinem Verständnis nach sehr stark vom encodeten Bild Abhängen. Ein komplett schwarzes Bild ist damit sehr gut komprimierbar, ein Bild mit vielen feinen Details dafür sehr schlecht.
