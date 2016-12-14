@@ -25,35 +25,26 @@ class ac(descriptor):
         self.type = "ac"
         self.value = value
         self.timesZero = timesZero
-        self.code = None
-        self.addBits = None
 
     def length(self):
-        """ Get count of bits needed to represent
-        this descriptor """
-        if self.code is None or self.addBits is None:
-            sum = 0
-            if self.timesZero > 0:
-                3
-            return sum + 1
-        else:
-            return len(self.code) + len(self.addBits)
+        """ Get count of values in this descriptor """
+        sum = 0
+        if self.timesZero > 1:
+            sum += 2
+        elif self.timesZero > 0:
+            sum += 1
+        return sum + 1
 
 
 class eob(descriptor):
     """ Descriptor that indicates End of block """
     def __init__(self):
         self.type = "eob"
-        self.code = None
         self.value = "eob"
 
     def length(self):
-        """ Get count of bits needed to represent
-        this descriptor """
-        if self.code is None:
-            return 4
-        else:
-            return len(self.code)
+        """ Get count of values in this descriptor """
+        return 1
 
 
 def encode(dct):
@@ -91,7 +82,8 @@ def RLEzigZag(dct):
             values = []
         else:
             values.append(value)
-    result.append(eob())
+    if len(values) > 0:
+        result.append(eob())
     return result
 
 
