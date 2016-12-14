@@ -1,9 +1,6 @@
 """ Simplified Entropy Coding as used in JPEG """
-import itertools
 import numpy as np
 import math
-import huffman
-import collections
 
 
 class descriptor:
