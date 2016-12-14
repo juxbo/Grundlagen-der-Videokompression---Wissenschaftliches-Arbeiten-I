@@ -28,8 +28,8 @@ Das Chroma Subsampling nutzt den Umstand aus, dass Helligkeitsvarianzen besser w
 \thickmuskip=0.5\thickmuskip
 \begin{align*}
 	Y = & \text{ } 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B \\
-	U = & \text{ } (B - Y) \cdot 0.493 \\
-	V = & \text{ } (R - Y) \cdot 0.877
+	C_B = & \text{ } (B - Y) \cdot 0.493 \\
+	C_R = & \text{ } (R - Y) \cdot 0.877
 \end{align*}
 Nun kann das eigentliche Subsampling stattfinden, welches bei MPEG-1 bei einer Auflösung von 4:2:0 realisiert wird. Die erste Zahl gibt hierbei die horizontale Abtastrate der Luminanz an. Die zweite Zahl steht für die horizontale Abtastrate der C$_B$ und C$_R$ Kanäle in Relation zum ersten Wert. Die dritte Zahl gibt die vertikale Sampling Rate an, wobei diese entweder 2 oder 0 betragen kann, also entweder kein vertikales Subsampling, oder vertikales Subsampling von 2:1 stattfindet. Für den Fall von 4:2:0 Subsampling bedeutet dies, dass jeweils 2x2 Bildpunkte des C$_B$ und C$_R$ Kanals auf einen Bildpunkt in der Ergebnismenge abgebildet werden. Hiermit wird also die Auflösung des C$_B$ und C$_R$ Kanals halbiert, was zu einer Datenreduktion von insgesamt 50\% führt. \cite{poynton_chroma_????} % Wenn möglich noch Poyntons Buch "Digital video and HDTV: algorithms and interfaces" check. Gibt es über die TU bib
 
