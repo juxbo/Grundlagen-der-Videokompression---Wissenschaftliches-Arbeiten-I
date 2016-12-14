@@ -54,7 +54,7 @@ Mit den Parametern M=4 und N=12, würde die GOP dann wie folgt aussehen:
 
 Bei MPEG-1 ist eine Aufteilung mit den Parametern M=3 bis 4 und N=11 bis 15 üblich. \cite{symes_peter_digital_2004}
 
-Betrachtet man ein Video mit einer üblichen Framerate von 25, dann ist dadurch wahlfreier Zugriff mit einer Genauigkeit von bis auf die Hälfte einer Sekunde gegeben. Außerdem wird der bei leichten Übertragungsfehlern auftretende Schaden minimiert, sodass das vom Endnutzer gesehene Video nur für sehr kurze Zeit Kompressionsartefakte aufweist, selbst bei komplettem Verlust eines I-Frames. 
+Betrachtet man ein Video mit einer üblichen Framerate von 25 FPS, dann ist dadurch wahlfreier Zugriff mit einer Genauigkeit von bis auf die Hälfte einer Sekunde gegeben. Außerdem wird der bei leichten Übertragungsfehlern auftretende Schaden minimiert, sodass das vom Endnutzer gesehene Video nur für sehr kurze Zeit Kompressionsartefakte aufweist, selbst bei komplettem Verlust eines I-Frames. 
 \subsection{Makroblöcke}
 Beim Komprimieren eines Videos wird zunächst ein Frame pro GOP mittels Irrelevanzreduktion komprimiert und dann als Referenz zwischengespeichert. Die folgenden Bilder werden, um die vom Encoder benötigte Arbeit einfach aufteilen zu können, in sogenannte Makroblöcke unterteilt. Diese Makroblöcke sind bei den meisten Standards auf eine feste Größe von 16x16 Pixel gesetzt.\cite{symes_peter_digital_2004} Die neusten Standards wie h.246/AVC unterstützen hingegen variable Blockgrößen und mehrere Refernzbilder. \cite{lin2009vlsi}
 \subsection{Bewegungskorrektur}
