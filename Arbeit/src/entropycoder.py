@@ -27,8 +27,11 @@ class ac(descriptor):
         """ Get count of values in this descriptor """
         sum = 0
         if self.timesZero > 1:
+            # multiple zeros are indicated by a symbol and
+            # and a count of how many zeros to insert
             sum += 2
         elif self.timesZero > 0:
+            # 1 zero will be encoded as zero
             sum += 1
         return sum + 1
 
@@ -41,6 +44,8 @@ class eob(descriptor):
 
     def length(self):
         """ Get count of values in this descriptor """
+        # eob is a special symbol implying all zeros
+        # until the end of the block
         return 1
 
 
