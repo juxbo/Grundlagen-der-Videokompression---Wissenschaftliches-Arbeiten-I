@@ -1,0 +1,16 @@
+# Seminar: Wissenschatliches Arbeiten in der Informatik I - Thema: Video-Kompressionsalgorithmen
+Dies ist ein Repository für das WiAInfo Seminar mit einer Hausarbeit über Video-Kompressionsalgorithmen.
+
+## Einleitung
+
+Videos sind seit der Entwicklung des Fernsehers zum Massenmedium kaum noch aus dem alltäglichen Leben wegzudenken. Seit dem Aufstieg des Internets als zentrales Kommunikationsmedium haben sich allerdings die Anforderungen an geeignete Speichertechniken von Videos drastisch verändert. Die heutigen Abspielgeräte haben noch immer begrenzten Speicherplatz und sind häufig nur mit schmalbandigen Internetanbindungen ausgestattet. Die Auflösung der Videos ist hingegen stark gestiegen. Um diese Ansprüche zu adressieren wurden Kompressionsalgorithmen entwickelt, die eine effiziente Speicherung speziell für bewegte Bilder ermöglichen. Die resultierenden Probleme aus dieser Art der Speicherung, wie Bildartefakte, sind heutigen Nutzern wohlbekannt. Die eigentliche Funktionsweise von Videokompression bleibt aber oft unbemerkt.
+
+Deshalb möchten wir in dieser wissenschaftlichen Arbeit eine Übersicht über die Grundlagen von Videokompressionsverfahren geben. Die Hauptverfahren mit denen wir uns im Detail beschäftigen werden, lassen sich in die Kategorien Irrelevanzreduktion und Redundanzreduktion unterteilen. Dahinter stehen interessante Verfahren der Informationstheorie und die Ausnutzung von psychovisuellen Effekten. % An Introduction to Digital Video S. 201
+
+## Vorgehen
+
+Als strukturgebende Grundlage für diese Arbeit soll der erste praktisch relevante Video Coding Standard der ITU-T, der H.261, dienen. Hier sind bereits die wichtigsten Methoden der Videokompression verwendet worden, wobei er zugleich keine komplexeren Modifikationen, wie seine Nachfolger, beinhaltet. Da eine vollständige Erarbeitung der technischen Umsetzungen aktueller Videocodecs im Rahmen dieser Semesterarbeit nicht möglich ist, werden wir uns auf die Herausarbeitung der generellen Prinzipien der visuellen Videokompression beschränken. Hierbei soll unser Fokus auf den mathematischen Grundlagen der Verfahren liegen, die wir mit Beispielcode veranschaulichen.
+
+## Erwartete Ergebnisse
+
+Wir erwarten mit dieser Arbeit einen Einblick in die unbemerkte Komplexität von Videokompression zu erhalten. Außerdem erhoffen wir uns durch das grundlegende Verständnis der Methoden Auffälligkeiten wie Bildartefakte oder stark variierende Dateigrößen von Videos gleicher Länge eigenständig erklären zu können.
